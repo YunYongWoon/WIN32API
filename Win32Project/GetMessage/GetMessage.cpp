@@ -1,8 +1,8 @@
-// Win32Project.cpp : 응용 프로그램에 대한 진입점을 정의합니다.
+// GetMessage.cpp : 응용 프로그램에 대한 진입점을 정의합니다.
 //
 
 #include "stdafx.h"
-#include "Win32Project.h"
+#include "GetMessage.h"
 
 #define MAX_LOADSTRING 100
 
@@ -10,6 +10,10 @@
 HINSTANCE hInst;                                // 현재 인스턴스입니다.
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
 WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
+HWND g_hWnd;
+HDC g_hDC;
+bool g_bLoop = true;
+RECT g_tPlayerRC = { 100,100,200,200 };
 
 // 이 코드 모듈에 들어 있는 함수의 정방향 선언입니다.
 ATOM                MyRegisterClass(HINSTANCE hInstance);
@@ -17,14 +21,7 @@ BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
-
-struct _tagArea {
-	bool bStart;
-	POINT ptStart;
-	POINT ptEnd;
-};
-
-_tagArea g_tArea;
+void Run();
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
@@ -38,7 +35,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     // 전역 문자열을 초기화합니다.
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
-    LoadStringW(hInstance, IDC_WIN32PROJECT, szWindowClass, MAX_LOADSTRING);
+    LoadStringW(hInstance, IDC_GETMESSAGE, szWindowClass, MAX_LOADSTRING);
     MyRegisterClass(hInstance);
 
     // 응용 프로그램 초기화를 수행합니다.
@@ -47,19 +44,36 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         return FALSE;
     }
 
-    HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_WIN32PROJECT));
+	g_hDC = GetDC(g_hWnd);
+
+    HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_GETMESSAGE));
 
     MSG msg;
 
     // 기본 메시지 루프입니다.
-    while (GetMessage(&msg, nullptr, 0, 0))
+    while (g_bLoop)
     {
-        if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
-        {
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
-        }
+	// PeekMessage는 메시지가 메시지큐에 없어도 바로 빠져 나온다.
+	// 메시지가 있을 경우 true, 없을 경우 false가 된다.
+	// 메시지가 없는 시간이 윈도우의 데드타임이다.
+		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+	// 윈도우가 데드타임일 경우
+		else {
+			static int iCount;
+			++iCount;
+
+			if (iCount == 50000) {
+				iCount = 0;
+				Run();
+			}
+			
+		}
     }
+
+	ReleaseDC(g_hWnd, g_hDC);
 
     return (int) msg.wParam;
 }
@@ -82,10 +96,10 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
     wcex.cbClsExtra     = 0;
     wcex.cbWndExtra     = 0;
     wcex.hInstance      = hInstance;
-    wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_WIN32PROJECT));
+    wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_GETMESSAGE));
     wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
-	wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW + 1);
-	wcex.lpszMenuName = NULL;// MAKEINTRESOURCEW(IDC_WIN32PROJECT);					//메뉴
+    wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
+	wcex.lpszMenuName = NULL;//MAKEINTRESOURCEW(IDC_GETMESSAGE);
     wcex.lpszClassName  = szWindowClass;
     wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
@@ -114,6 +128,19 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
       return FALSE;
    }
 
+   g_hWnd = hWnd;
+
+   // 실제 윈도우 타이틀바나 메뉴를 포함한 윈도우의 크기를
+   // 구해준다.
+
+   RECT rc = { 0,0,800,600 };
+   AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
+
+
+   // 위에서 구해준 크기로 윈도우 클라이언트 영역의 크기를 
+   // 원하는 크기로 맞춰줘야 한다.
+   SetWindowPos(hWnd, HWND_TOPMOST, 100, 100,
+	   rc.right - rc.left, rc.bottom - rc.top,SWP_NOMOVE | SWP_NOZORDER);
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);
 
@@ -151,91 +178,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             }
         }
         break;
-
-	// 마우스 왼쪽 버튼 눌렀을때 들어온다
-	case WM_LBUTTONDOWN:
-		// 마우스 위치는 lParam에 들어오게 되는데 16비트로 쪼개서 x,y값이 32비트 변수에 들어오게 된다.
-		// LOWORD,HIWORD 매크로를 이용해서 하위, 상위 16비트의 값을 얻어올 수 있다.
-		if (!g_tArea.bStart) {
-			g_tArea.bStart = true;
-			g_tArea.ptStart.x = lParam & 0x0000ffff;
-			g_tArea.ptStart.y = lParam >> 16;
-			g_tArea.ptEnd = g_tArea.ptStart;
-
-			// InvalidateRect 함수는 강제로 WM_PAINT 메세지를 호출해주는 함수이다.
-			// 1번인자 : 윈도우 핸들  2번인자 : 갱신할 영역(NULL 일 경우 전체 화면을 대상으로 갱신)
-			// 3번인자 : TRUE일경우는 현재 화면을 지우고 갱신 , FALSE일 경우 현재 화면을 안지우고 갱신
-			InvalidateRect(hWnd, NULL, TRUE);
-		}
-		break;
-	// 마우스를 움직일 때 들어오는 메세지
-	case WM_MOUSEMOVE:
-		if (g_tArea.bStart) {
-			g_tArea.ptEnd.x = lParam & 0x0000ffff;
-			g_tArea.ptEnd.y = lParam >> 16;
-			InvalidateRect(hWnd, NULL, TRUE);
-		}
-		break;
-
-	case WM_LBUTTONUP:
-		if (g_tArea.bStart) {
-			g_tArea.bStart = false;
-			g_tArea.ptStart.x = lParam & 0x0000ffff;
-			g_tArea.ptStart.y = lParam >> 16;
-			InvalidateRect(hWnd, NULL, TRUE);
-		}
-		break;
-	// 키가 눌려질경우 들어오는 메세지
-	case WM_KEYDOWN:
-		// 이 메세지가 들어오면 wParam에 어떤 키가 눌러졌는지 알려진다.
-		switch (wParam) {
-		case VK_ESCAPE:
-			DestroyWindow(hWnd);
-			break;
-		}
-		break;
-
-
     case WM_PAINT:
         {
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hWnd, &ps);
             // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다.
-
-			// 유니코드 문자열은 앞에 L을 붙여주거나 텍스트 매크로를 이용한다.
-			// 텍스트 매크로는 유니코드와 멀티바이트를 구분가능함.
-			TextOut(hdc, 50, 50, TEXT("win32"), 5);
-
-			// wsprintf : 유니코드 문자열을 만들어주는 함수이다.
-			// %d에는 정수가 대입된다.
-			TCHAR strMouse[64] = {};
-			wsprintf(strMouse, TEXT("x:%d, y:%d"), g_tArea.ptStart.x, g_tArea.ptStart.y);
-			TextOut(hdc, 600, 30, strMouse, lstrlen(strMouse));
-			// lstrlen : 유니코드 문자열의 길이를 호출해주는 함수
-
-			// 사각형을 그려주는 함수
-		//	Rectangle(hdc, 100, 100, 200, 200); 
-
-			// 직선을 그려주는 함수
-		//	MoveToEx(hdc, 300, 100, NULL);		
-		//	LineTo(hdc, 400, 150);
-		//	LineTo(hdc, 500, 100);
-
-		//	MoveToEx(hdc, 100, 400, NULL);
-		//	LineTo(hdc, 200, 500);
-		//	LineTo(hdc, 300, 500);
-
-			// 원을 그려주는 함수
-		//	Ellipse(hdc, 200, 200, 330, 330);
-			
-			if (g_tArea.bStart) {
-				Rectangle(hdc, g_tArea.ptStart.x, g_tArea.ptStart.y, g_tArea.ptEnd.x, g_tArea.ptEnd.y);
-			}
-
             EndPaint(hWnd, &ps);
         }
         break;
-    case WM_DESTROY:
+    case WM_DESTROY: // Window 종룔될 때 들어오는 메시지.
+		g_bLoop = false;
         PostQuitMessage(0);
         break;
     default:
@@ -262,4 +214,28 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
         break;
     }
     return (INT_PTR)FALSE;
+}
+
+void Run() {
+	if (GetAsyncKeyState('D') & 0x8000) {
+		g_tPlayerRC.left += 1;
+		g_tPlayerRC.right += 1;
+	}
+
+	if (GetAsyncKeyState('A') & 0x8000) {
+		g_tPlayerRC.left -= 1;
+		g_tPlayerRC.right -= 1;
+	}
+
+	if (GetAsyncKeyState('W') & 0x8000) {
+		g_tPlayerRC.top -= 1;
+		g_tPlayerRC.bottom -= 1;
+	}
+
+	if (GetAsyncKeyState('S') & 0x8000) {
+		g_tPlayerRC.top += 1;
+		g_tPlayerRC.bottom += 1;
+	}
+	
+	Rectangle(g_hDC, g_tPlayerRC.left, g_tPlayerRC.top, g_tPlayerRC.right, g_tPlayerRC.bottom);
 }
