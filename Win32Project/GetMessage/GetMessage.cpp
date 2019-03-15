@@ -237,14 +237,17 @@ void Run() {
 		g_tPlayerRC.bottom += 1;
 	}
 
+	RECT rcWindow;
+	GetClientRect(g_hWnd, &rcWindow);
+
 	if (g_tPlayerRC.left < 0) {
 		g_tPlayerRC.left = 0;
 		g_tPlayerRC.right = 100;
 	}
 
-	else if (g_tPlayerRC.right > 800) {
-		g_tPlayerRC.right = 800;
-		g_tPlayerRC.left = 700;
+	else if (g_tPlayerRC.right > rcWindow.right) {
+		g_tPlayerRC.right = rcWindow.right;
+		g_tPlayerRC.left = rcWindow.right - 100;
 	}
 
 	if (g_tPlayerRC.top < 0) {
@@ -252,9 +255,9 @@ void Run() {
 		g_tPlayerRC.bottom = 100;
 	}
 
-	else if (g_tPlayerRC.bottom > 600) {
-		g_tPlayerRC.bottom = 600;
-		g_tPlayerRC.top = 500;
+	else if (g_tPlayerRC.bottom > rcWindow.bottom) {
+		g_tPlayerRC.bottom = rcWindow.bottom;
+		g_tPlayerRC.top = rcWindow.bottom - 100;
 	}
 
 
