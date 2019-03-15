@@ -87,7 +87,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	g_tMonster.tRC.b = 100.f;
 	g_tMonster.fSpeed = 300.f;
 	g_tMonster.fTime = 0.f;
-	g_tMonster.fLimitTime = 1.1f;
+	g_tMonster.fLimitTime = 0.5f;
 	g_tMonster.iDir = 1;
 
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_GETMESSAGE));
@@ -403,6 +403,12 @@ void Run() {
 			iterEnd = g_PlayerBulletList.end();
 		}
 
+		else if (g_tMonster.tRC.l <= (*iter).rc.r && g_tMonster.tRC.r >= (*iter).rc.l&&
+			g_tMonster.tRC.t <= (*iter).rc.b&&g_tMonster.tRC.b >= (*iter).rc.t) {
+			iter = g_PlayerBulletList.erase(iter);
+			iterEnd = g_PlayerBulletList.end();
+		}
+
 		else
 			iter++;
 	} 
@@ -424,8 +430,16 @@ void Run() {
 			iterEnd = g_MonsterBulletList.end();
 		}
 
-		else
+		else if (g_tPlayerRC.l <= (*iter).rc.r && g_tPlayerRC.r >= (*iter).rc.l&&
+			g_tPlayerRC.t <= (*iter).rc.b&&g_tPlayerRC.b >= (*iter).rc.t) {
+			iter = g_MonsterBulletList.erase(iter);
+			iterEnd = g_MonsterBulletList.end();
+		}
+
+		else {
 			iter++;
+		}
+			
 	}
 
 	// Ãâ·Â
