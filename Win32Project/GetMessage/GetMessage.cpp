@@ -3,10 +3,21 @@
 
 #include "stdafx.h"
 #include "GetMessage.h"
+#include "list"
+
+using namespace std;
 
 typedef struct _tagRectangle {
 	float l, t, r, b;
 }RECTANGLE, *PRECTANGLE;
+
+typedef struct _tagMonster {
+	RECTANGLE tRC;
+	float fSpeed;
+	float fTime;
+	float fLimitTime;
+	int iDir;
+}MONSTER, *PMONSTER;
 
 #define MAX_LOADSTRING 100
 
@@ -18,6 +29,19 @@ HWND g_hWnd;
 HDC g_hDC;
 bool g_bLoop = true;
 RECTANGLE g_tPlayerRC = { 100,100,200,200 };
+MONSTER g_tMonster;
+
+// 플레이어 총알
+typedef struct _tagBullet {
+	RECTANGLE rc;
+	float fDist;
+	float fLimitDist;
+}BULLET,*PBULLET;
+
+// 플레이어 총알
+list<BULLET> g_PlayerBulletList;
+// 몬스터 총알
+list<BULLET> g_MonsterBulletList;
 
 // 시간을 구하기 위한 변수들
 LARGE_INTEGER g_tSecond;
@@ -53,7 +77,18 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         return FALSE;
     }
 
+	// 화면용 DC 생성
 	g_hDC = GetDC(g_hWnd);
+
+	// 몬스터 초기화
+	g_tMonster.tRC.l = 800.f - 100.f;
+	g_tMonster.tRC.t = 0.f;
+	g_tMonster.tRC.r = 800.f;
+	g_tMonster.tRC.b = 100.f;
+	g_tMonster.fSpeed = 300.f;
+	g_tMonster.fTime = 0.f;
+	g_tMonster.fLimitTime = 1.1f;
+	g_tMonster.iDir = 1;
 
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_GETMESSAGE));
 
@@ -73,8 +108,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		}
 	// 윈도우가 데드타임일 경우
 		else {
-				Run();
-					
+				Run();				
 		}
     }
 
@@ -250,12 +284,9 @@ void Run() {
 	}
 
 	// 플레이어 초당 이동속도 500
-	float fSpeed = 500 * g_fDeltatime*fTimeScale;
+	float fSpeed = 400.f * g_fDeltatime*fTimeScale;
 
-	if (GetAsyncKeyState('D') & 0x8000) {
-		g_tPlayerRC.l += fSpeed;
-		g_tPlayerRC.r += fSpeed;
-	}
+	// 플레이어의 이동
 
 	if (GetAsyncKeyState('A') & 0x8000) {
 		g_tPlayerRC.l -= fSpeed;
@@ -272,8 +303,28 @@ void Run() {
 		g_tPlayerRC.b += fSpeed;
 	}
 
+	if (GetAsyncKeyState('D') & 0x8000) {
+		g_tPlayerRC.l += fSpeed;
+		g_tPlayerRC.r += fSpeed;
+	}
+
+	// 총알 생성
+	if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
+		BULLET tBullet;
+		tBullet.rc.l = g_tPlayerRC.r;
+		tBullet.rc.r = g_tPlayerRC.r + 25.f;
+		tBullet.rc.t = (g_tPlayerRC.t + g_tPlayerRC.b) / 2.f - 5.f;
+		tBullet.rc.b = tBullet.rc.t + 5.f;
+
+		tBullet.fDist = 0.f;
+		tBullet.fLimitDist = 500.f;
+	
+		g_PlayerBulletList.push_back(tBullet);
+	}
+
 	RECT rcWindow;
 	GetClientRect(g_hWnd, &rcWindow);
+	SetRect(&rcWindow, 0, 0, 800, 600);
 
 	if (g_tPlayerRC.l < 0) {
 		g_tPlayerRC.l = 0;
@@ -294,7 +345,105 @@ void Run() {
 		g_tPlayerRC.b = rcWindow.bottom;
 		g_tPlayerRC.t = rcWindow.bottom - 100;
 	}
+	// 몬스터 이동 
+	g_tMonster.tRC.t += g_tMonster.fSpeed * g_fDeltatime *
+		fTimeScale * g_tMonster.iDir;
+	g_tMonster.tRC.b += g_tMonster.fSpeed * g_fDeltatime *
+		fTimeScale * g_tMonster.iDir;
 
+	if (g_tMonster.tRC.b >= 600) {
+		g_tMonster.iDir = -1;
+		g_tMonster.tRC.b = 600;
+		g_tMonster.tRC.t = 500;
+	}
+
+	if (g_tMonster.tRC.t <= 0) {
+		g_tMonster.iDir = 1;
+		g_tMonster.tRC.b = 100;
+		g_tMonster.tRC.t = 0;
+	}
+	// 몬스터 총알 발사 로직
+	g_tMonster.fTime += g_fDeltatime;
+
+	if (g_tMonster.fTime >= g_tMonster.fLimitTime) {
+		g_tMonster.fTime -= g_tMonster.fLimitTime;
+
+		BULLET tBullet = {};
+		tBullet.rc.r = g_tMonster.tRC.l;
+		tBullet.rc.l = g_tMonster.tRC.l - 25.f;
+		tBullet.rc.t = (g_tMonster.tRC.t + g_tMonster.tRC.b) / 2.f - 5.f;
+		tBullet.rc.b = tBullet.rc.t + 5.f;
+
+		tBullet.fDist = 0.f;
+		tBullet.fLimitDist = 800.f;
+
+		g_MonsterBulletList.push_back(tBullet);
+	}
+
+	
+
+	// 플레이어 총알 이동
+	list<BULLET>::iterator iter;
+	list<BULLET>::iterator iterEnd = g_PlayerBulletList.end();
+
+	fSpeed = 600.f * g_fDeltatime * fTimeScale;
+	for (iter = g_PlayerBulletList.begin(); iter != iterEnd;) {
+		(*iter).rc.l += fSpeed;
+		(*iter).rc.r += fSpeed;
+
+		(*iter).fDist += fSpeed;
+
+		if ((*iter).fDist >= (*iter).fLimitDist) {
+			iter = g_PlayerBulletList.erase(iter);
+			iterEnd = g_PlayerBulletList.end();
+		}
+
+		else if ((*iter).rc.l >= 800) {
+			iter = g_PlayerBulletList.erase(iter);
+			iterEnd = g_PlayerBulletList.end();
+		}
+
+		else
+			iter++;
+	} 
+	// 몬스터 총알 이동
+	iterEnd = g_MonsterBulletList.end();
+	for (iter = g_MonsterBulletList.begin(); iter != iterEnd;) {
+		(*iter).rc.l -= fSpeed;
+		(*iter).rc.r -= fSpeed;
+
+		(*iter).fDist += fSpeed;
+
+		if ((*iter).fDist >= (*iter).fLimitDist) {
+			iter = g_MonsterBulletList.erase(iter);
+			iterEnd = g_MonsterBulletList.end();
+		}
+
+		else if ((*iter).rc.r <= 0) {
+			iter = g_MonsterBulletList.erase(iter);
+			iterEnd = g_MonsterBulletList.end();
+		}
+
+		else
+			iter++;
+	}
+
+	// 출력
+	// Rectangle(g_hDC, 0, 0, 800, 600);
 
 	Rectangle(g_hDC, g_tPlayerRC.l, g_tPlayerRC.t, g_tPlayerRC.r, g_tPlayerRC.b);
+	Rectangle(g_hDC, g_tMonster.tRC.l, g_tMonster.tRC.t, g_tMonster.tRC.r, g_tMonster.tRC.b);
+
+	
+	// 플레이어 총알 출력
+	iterEnd = g_PlayerBulletList.end();
+	for (iter = g_PlayerBulletList.begin(); iter != iterEnd; ++iter) {
+		Rectangle(g_hDC, (*iter).rc.l, (*iter).rc.t, (*iter).rc.r, (*iter).rc.b);
+	}
+
+	// 몬스터 총알 출력
+	iterEnd = g_MonsterBulletList.end();
+	for (iter = g_MonsterBulletList.begin(); iter != iterEnd; ++iter) {
+		Rectangle(g_hDC, (*iter).rc.l, (*iter).rc.t, (*iter).rc.r, (*iter).rc.b);
+	}
 }
