@@ -4,6 +4,10 @@
 #include "stdafx.h"
 #include "GetMessage.h"
 
+typedef struct _tagRectangle {
+	float l, t, r, b;
+}RECTANGLE, *PRECTANGLE;
+
 #define MAX_LOADSTRING 100
 
 // 전역 변수:
@@ -13,7 +17,12 @@ WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
 HWND g_hWnd;
 HDC g_hDC;
 bool g_bLoop = true;
-RECT g_tPlayerRC = { 100,100,200,200 };
+RECTANGLE g_tPlayerRC = { 100,100,200,200 };
+
+// 시간을 구하기 위한 변수들
+LARGE_INTEGER g_tSecond;
+LARGE_INTEGER g_tTime;
+float g_fDeltatime;
 
 // 이 코드 모듈에 들어 있는 함수의 정방향 선언입니다.
 ATOM                MyRegisterClass(HINSTANCE hInstance);
@@ -50,6 +59,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     MSG msg;
 
+	QueryPerformanceFrequency(&g_tSecond);
+	QueryPerformanceCounter(&g_tTime);
     // 기본 메시지 루프입니다.
     while (g_bLoop)
     {
@@ -62,14 +73,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		}
 	// 윈도우가 데드타임일 경우
 		else {
-			static int iCount;
-			++iCount;
-
-			if (iCount == 50000) {
-				iCount = 0;
 				Run();
-			}
-			
+					
 		}
     }
 
@@ -217,49 +222,79 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 }
 
 void Run() {
+	// DeltaTime을 구해준다.
+	LARGE_INTEGER tTime;
+	QueryPerformanceCounter(&tTime);
+
+	g_fDeltatime = (tTime.QuadPart - g_tTime.QuadPart) / (float)g_tSecond.QuadPart;
+	g_tTime = tTime;
+
+	static float fTimeScale = 1.f;
+
+	if (GetAsyncKeyState(VK_F1) & 0x8000) {
+		fTimeScale -= g_fDeltatime;
+
+		if (fTimeScale < 0.f)
+			fTimeScale = 0.f;
+	}
+
+	if (GetAsyncKeyState(VK_F2) & 0x8000) {
+		fTimeScale += g_fDeltatime;
+
+		if (fTimeScale > 1.f)
+			fTimeScale = 1.f;
+	}
+
+	if (GetAsyncKeyState(VK_F3) & 0x8000) {
+		fTimeScale = 0;
+	}
+
+	// 플레이어 초당 이동속도 500
+	float fSpeed = 500 * g_fDeltatime*fTimeScale;
+
 	if (GetAsyncKeyState('D') & 0x8000) {
-		g_tPlayerRC.left += 1;
-		g_tPlayerRC.right += 1;
+		g_tPlayerRC.l += fSpeed;
+		g_tPlayerRC.r += fSpeed;
 	}
 
 	if (GetAsyncKeyState('A') & 0x8000) {
-		g_tPlayerRC.left -= 1;
-		g_tPlayerRC.right -= 1;
+		g_tPlayerRC.l -= fSpeed;
+		g_tPlayerRC.r -= fSpeed;
 	}
 
 	if (GetAsyncKeyState('W') & 0x8000) {
-		g_tPlayerRC.top -= 1;
-		g_tPlayerRC.bottom -= 1;
+		g_tPlayerRC.t -=fSpeed;
+		g_tPlayerRC.b -=fSpeed;
 	}
 
 	if (GetAsyncKeyState('S') & 0x8000) {
-		g_tPlayerRC.top += 1;
-		g_tPlayerRC.bottom += 1;
+		g_tPlayerRC.t += fSpeed;
+		g_tPlayerRC.b += fSpeed;
 	}
 
 	RECT rcWindow;
 	GetClientRect(g_hWnd, &rcWindow);
 
-	if (g_tPlayerRC.left < 0) {
-		g_tPlayerRC.left = 0;
-		g_tPlayerRC.right = 100;
+	if (g_tPlayerRC.l < 0) {
+		g_tPlayerRC.l = 0;
+		g_tPlayerRC.r = 100;
 	}
 
-	else if (g_tPlayerRC.right > rcWindow.right) {
-		g_tPlayerRC.right = rcWindow.right;
-		g_tPlayerRC.left = rcWindow.right - 100;
+	else if (g_tPlayerRC.r > rcWindow.right) {
+		g_tPlayerRC.r = rcWindow.right;
+		g_tPlayerRC.l = rcWindow.right - 100;
 	}
 
-	if (g_tPlayerRC.top < 0) {
-		g_tPlayerRC.top = 0;
-		g_tPlayerRC.bottom = 100;
+	if (g_tPlayerRC.t < 0) {
+		g_tPlayerRC.t = 0;
+		g_tPlayerRC.b = 100;
 	}
 
-	else if (g_tPlayerRC.bottom > rcWindow.bottom) {
-		g_tPlayerRC.bottom = rcWindow.bottom;
-		g_tPlayerRC.top = rcWindow.bottom - 100;
+	else if (g_tPlayerRC.b > rcWindow.bottom) {
+		g_tPlayerRC.b = rcWindow.bottom;
+		g_tPlayerRC.t = rcWindow.bottom - 100;
 	}
 
 
-	Rectangle(g_hDC, g_tPlayerRC.left, g_tPlayerRC.top, g_tPlayerRC.right, g_tPlayerRC.bottom);
+	Rectangle(g_hDC, g_tPlayerRC.l, g_tPlayerRC.t, g_tPlayerRC.r, g_tPlayerRC.b);
 }
