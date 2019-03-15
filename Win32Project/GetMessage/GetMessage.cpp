@@ -236,6 +236,27 @@ void Run() {
 		g_tPlayerRC.top += 1;
 		g_tPlayerRC.bottom += 1;
 	}
-	
+
+	if (g_tPlayerRC.left < 0) {
+		g_tPlayerRC.left = 0;
+		g_tPlayerRC.right = 100;
+	}
+
+	else if (g_tPlayerRC.right > 800) {
+		g_tPlayerRC.right = 800;
+		g_tPlayerRC.left = 700;
+	}
+
+	if (g_tPlayerRC.top < 0) {
+		g_tPlayerRC.top = 0;
+		g_tPlayerRC.bottom = 100;
+	}
+
+	else if (g_tPlayerRC.bottom > 600) {
+		g_tPlayerRC.bottom = 600;
+		g_tPlayerRC.top = 500;
+	}
+
+
 	Rectangle(g_hDC, g_tPlayerRC.left, g_tPlayerRC.top, g_tPlayerRC.right, g_tPlayerRC.bottom);
 }
