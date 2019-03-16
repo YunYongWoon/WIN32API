@@ -11,7 +11,10 @@ public:
 		if (!m_pInst) 
 			m_pInst = new CCore;
 		return m_pInst;
+	}
 
+	static void DestroyInst() {
+		SAFE_DELETE(m_pInst);
 	}
 
 private:
