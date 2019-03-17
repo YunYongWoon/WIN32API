@@ -19,6 +19,9 @@
     <Filter Include="02. Scene">
       <UniqueIdentifier>{91ffa251-27f8-455a-b21e-6ef8ee8f1bff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Core\01. Timer">
+      <UniqueIdentifier>{483b8b48-616e-4b58-a8b3-884b4f869150}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp">
@@ -29,6 +32,15 @@
     </ClCompile>
     <ClCompile Include="Scene\SceneManager.cpp">
       <Filter>02. Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\Scene.cpp">
+      <Filter>02. Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\InGameScene.cpp">
+      <Filter>02. Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Timer.cpp">
+      <Filter>01. Core\01. Timer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -49,6 +61,18 @@
     </ClInclude>
     <ClInclude Include="Scene\SceneManager.h">
       <Filter>02. Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\Scene.h">
+      <Filter>02. Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\InGameScene.h">
+      <Filter>02. Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Flag.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Timer.h">
+      <Filter>01. Core\01. Timer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

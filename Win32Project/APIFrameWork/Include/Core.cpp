@@ -1,5 +1,6 @@
 #include "Core.h"
 #include "Scene\SceneManager.h"
+#include "Core\Timer.h"
 
 DEFINITION_SINGLE(CCore)
 bool CCore::m_bLoop = true;
@@ -22,7 +23,12 @@ bool CCore::Init(HINSTANCE hInst) {
 
 	Create();
 
+	// 타이머 초기화
+	if (!GET_SINGLE(CTimer)->Init())
+		return false;
+
 	// 장면관리자 초기화
+	DESTROY_SINGLE(CTimer);
 	if (!GET_SINGLE(CSceneManager)->Init())
 		return false;
 
@@ -48,6 +54,13 @@ int CCore::Run() {
 
 	return (int)msg.wParam;
 	
+}
+
+void CCore::Logic() {
+	// 타이머 갱신 
+	GET_SINGLE(CTimer)->Update();
+
+	float fDeltaTime = GET_SINGLE(CTimer)->GetDeltaTime();
 }
 
 ATOM CCore::MyRegisterClass() {
