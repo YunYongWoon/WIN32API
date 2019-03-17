@@ -1,6 +1,7 @@
 #include "Core.h"
+#include "Scene\SceneManager.h"
 
-CCore* CCore::m_pInst = NULL;
+DEFINITION_SINGLE(CCore)
 bool CCore::m_bLoop = true;
 
 CCore::CCore() {
@@ -8,10 +9,11 @@ CCore::CCore() {
 
 
 CCore::~CCore() {
+	DESTROY_SINGLE(CSceneManager);
 }
 
 bool CCore::Init(HINSTANCE hInst) {
-	m_hInst = hInst;
+	this->m_hInst = hInst;
 	MyRegisterClass();
 
 	// 해상도 설정
@@ -19,6 +21,10 @@ bool CCore::Init(HINSTANCE hInst) {
 	m_tRS.iH = 720;
 
 	Create();
+
+	// 장면관리자 초기화
+	if (!GET_SINGLE(CSceneManager)->Init())
+		return false;
 
 	return true;
 }
