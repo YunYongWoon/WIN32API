@@ -2,7 +2,7 @@
 #include "Scene\SceneManager.h"
 #include "Core\Timer.h"
 
-DEFINITION_SINGLE(CCore)
+CCore* CCore::m_pInst = NULL;
 bool CCore::m_bLoop = true;
 
 CCore::CCore() {
@@ -11,6 +11,7 @@ CCore::CCore() {
 
 CCore::~CCore() {
 	DESTROY_SINGLE(CSceneManager);
+	DESTROY_SINGLE(CTimer);
 }
 
 bool CCore::Init(HINSTANCE hInst) {
@@ -49,6 +50,7 @@ int CCore::Run() {
 		}
 		// 윈도우가 데드타임일 경우
 		else {
+			Logic();
 		}
 	}
 

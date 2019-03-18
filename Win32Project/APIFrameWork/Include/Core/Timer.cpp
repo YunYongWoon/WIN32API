@@ -1,6 +1,6 @@
 #include "Timer.h"
 
-
+CTimer* CTimer::m_pInst = NULL;
 
 CTimer::CTimer() {
 }
