@@ -16,6 +16,7 @@ private:
 	class CScene* m_pScene;
 	string m_strTag;
 	int	m_iZOrder;			// 레이어 중 어떤 것부터 출력할지 결정(나중에 출력할 것이 먼저 출력할 것을 덮어버린다.
+	list<class CObj*> m_ObjList;
 
 public:
 	void SetTag(const string& strTag) {
@@ -41,5 +42,12 @@ public:
 	CScene* GetScene() const {
 		return m_pScene;
 	}
+
+public:
+	void Input(float fDeltaTime);
+	int Update(float fDeltaTime);
+	int LateUpdate(float fDeltaTime);
+	void Collision(float fDeltaTime);
+	void Render(HDC hDC, float fDeltaTime);
 };
 
