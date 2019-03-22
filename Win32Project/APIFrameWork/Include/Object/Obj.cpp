@@ -1,7 +1,11 @@
 #include "Obj.h"
 
 
-CObj::CObj() : m_iRef(1) {
+CObj::CObj() {
+}
+
+CObj::CObj(const CObj & obj) {
+	*this = obj;
 }
 
 

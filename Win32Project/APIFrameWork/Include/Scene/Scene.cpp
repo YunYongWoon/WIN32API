@@ -25,6 +25,17 @@ CLayer * CScene::CreateLayer(const string & strTag, int iZOrder) {
 	return pLayer;
 }
 
+CLayer * CScene::FindLayer(const string & strTag) {
+	list<CLayer*>::iterator iter;
+	list<CLayer*>::iterator iterEnd = m_LayerList.end();
+
+	for (iter = m_LayerList.begin(); iter != iterEnd; iter++) {
+		if ((*iter)->GetTag() == strTag)
+			return *iter;
+	}
+	return NULL;
+}
+
 bool CScene::Init() {
 	return true;
 }
@@ -36,7 +47,6 @@ void CScene::Input(float fDeltaTime) {
 	for (iter = m_LayerList.begin(); iter != iterEnd; iter++) {
 		(*iter)->Input(fDeltaTime);
 	}
-
 }
 
 int CScene::Update(float fDeltaTime) {
