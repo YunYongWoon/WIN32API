@@ -14,16 +14,13 @@ CPlayer::~CPlayer() {
 bool CPlayer::Init() {
 	SetPos(100.f, 100.f);
 	SetSize(100.f, 100.f);
-<<<<<<< HEAD
 	SetSpeed(400.f);
-=======
->>>>>>> d63d3f72a23ca8c2a58faf79d4ede9e5a09c6f64
+
 	return true;
 }
 
 void CPlayer::Input(float fDeltaTime) {
 	CMoveObj::Input(fDeltaTime);
-<<<<<<< HEAD
 
 	if (GetAsyncKeyState('W') & 0x8000) {
 		MoveYFromSpeed(fDeltaTime, MD_BACK);
@@ -37,8 +34,6 @@ void CPlayer::Input(float fDeltaTime) {
 	if (GetAsyncKeyState('D') & 0x8000) {
 		MoveXFromSpeed(fDeltaTime, MD_FRONT);
 	}
-=======
->>>>>>> d63d3f72a23ca8c2a58faf79d4ede9e5a09c6f64
 }
 
 int CPlayer::Update(float fDeltaTime) {

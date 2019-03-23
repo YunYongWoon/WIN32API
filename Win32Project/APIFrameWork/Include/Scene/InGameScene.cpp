@@ -20,12 +20,9 @@ bool CInGameScene::Init() {
 	CPlayer* pPlayer = CObj::CreateObj<CPlayer>("Player", pLayer);
 	SAFE_RELEASE(pPlayer);
 
-<<<<<<< HEAD
 	CMinion* pMinion = CObj::CreateObj<CMinion>("Minion", pLayer);
 	SAFE_RELEASE(pMinion);
-	
-=======
->>>>>>> d63d3f72a23ca8c2a58faf79d4ede9e5a09c6f64
+
 
 	return true;
 }
