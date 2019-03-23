@@ -12,6 +12,7 @@ CLayer::~CLayer() {
 }
 
 void CLayer::AddObject(CObj * pObj) {
+
 	pObj->SetScene(m_pScene);
 	pObj->SetLayer(this);
 	pObj->AddRef();
