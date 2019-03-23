@@ -44,8 +44,20 @@ void CScene::Input(float fDeltaTime) {
 	list<CLayer*>::iterator iter;
 	list<CLayer*>::iterator iterEnd = m_LayerList.end();
 
-	for (iter = m_LayerList.begin(); iter != iterEnd; iter++) {
+	for (iter = m_LayerList.begin(); iter != iterEnd;) {
+		if (!(*iter)->GetEnable()) {
+			++iter;
+			continue;
+		}
 		(*iter)->Input(fDeltaTime);
+		if (!(*iter)->GetLife()) {
+			SAFE_DELETE((*iter));
+			iter = m_LayerList.erase(iter);
+			iterEnd = m_LayerList.end();
+		}
+		else {
+			++iter;
+		}
 	}
 }
 
@@ -54,8 +66,21 @@ int CScene::Update(float fDeltaTime) {
 	list<CLayer*>::iterator iter;
 	list<CLayer*>::iterator iterEnd = m_LayerList.end();
 
-	for (iter = m_LayerList.begin(); iter != iterEnd; iter++) {
+	for (iter = m_LayerList.begin(); iter != iterEnd;) {
+		if (!(*iter)->GetEnable()) {
+			++iter;
+			continue;
+		}
 		(*iter)->Update(fDeltaTime);
+
+		if (!(*iter)->GetLife()) {
+			SAFE_DELETE((*iter));
+			iter = m_LayerList.erase(iter);
+			iterEnd = m_LayerList.end();
+		}
+		else {
+			++iter;
+		}
 	}
 
 	return 0;
@@ -66,8 +91,21 @@ int CScene::LateUpdate(float fDeltaTime) {
 	list<CLayer*>::iterator iter;
 	list<CLayer*>::iterator iterEnd = m_LayerList.end();
 
-	for (iter = m_LayerList.begin(); iter != iterEnd; iter++) {
+	for (iter = m_LayerList.begin(); iter != iterEnd;) {
+		if (!(*iter)->GetEnable()) {
+			++iter;
+			continue;
+		}
 		(*iter)->LateUpdate(fDeltaTime);
+
+		if (!(*iter)->GetLife()) {
+			SAFE_DELETE((*iter));
+			iter = m_LayerList.erase(iter);
+			iterEnd = m_LayerList.end();
+		}
+		else {
+			++iter;
+		}
 	}
 	return 0;
 }
@@ -77,17 +115,43 @@ void CScene::Collision(float fDeltaTime) {
 	list<CLayer*>::iterator iter;
 	list<CLayer*>::iterator iterEnd = m_LayerList.end();
 
-	for (iter = m_LayerList.begin(); iter != iterEnd; iter++) {
+	for (iter = m_LayerList.begin(); iter != iterEnd;) {
+		if (!(*iter)->GetEnable()) {
+			++iter;
+			continue;
+		}
 		(*iter)->Collision(fDeltaTime);
-	} 
+
+		if (!(*iter)->GetLife()) {
+			SAFE_DELETE((*iter));
+			iter = m_LayerList.erase(iter);
+			iterEnd = m_LayerList.end();
+		}
+		else {
+			++iter;
+		}
+	}
 }
 
 void CScene::Render(HDC hDC, float fDeltaTime) {
 	list<CLayer*>::iterator iter;
 	list<CLayer*>::iterator iterEnd = m_LayerList.end();
 
-	for (iter = m_LayerList.begin(); iter != iterEnd; iter++) {
+	for (iter = m_LayerList.begin(); iter != iterEnd;) {
+		if (!(*iter)->GetEnable()) {
+			++iter;
+			continue;
+		}
 		(*iter)->Render(hDC, fDeltaTime);
+
+		if (!(*iter)->GetLife()) {
+			SAFE_DELETE((*iter));
+			iter = m_LayerList.erase(iter);
+			iterEnd = m_LayerList.end();
+		}
+		else {
+			++iter;
+		}
 	}
 }
 

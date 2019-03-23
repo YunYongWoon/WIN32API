@@ -8,7 +8,20 @@ protected:
 	CObj(const CObj& obj);
 	virtual ~CObj();
 
-protected: 
+private:
+	static list<CObj*> m_ObjList;
+	static unordered_map<string, CObj*> m_mapPrototype;
+
+public:
+	static void AddObj(CObj *pObj);
+	static CObj* FindObject(const string& strTag);
+	static void EraseObj(CObj* pObj);
+	static void EraseObj(const string& strTag);
+	static void EraseObj();
+	static void ErasePrototype(const string& strTag);
+	static void ErasePrototype();
+
+protected:  
 	class CScene* m_pScene;
 	class CLayer* m_pLayer;
 
@@ -31,8 +44,7 @@ public:
 protected:
 	int m_iRef;
 
-protected:
-	list<class CObj*> m_ObjList;
+
 
 protected:
 	string m_strTag;
@@ -83,11 +95,15 @@ public:
 	virtual int LateUpdate(float fDeltaTime);
 	virtual void Collision(float fDeltaTime);
 	virtual void Render(HDC hDC, float fDeltaTime);
+	virtual CObj* Clone() = 0;
 
 public:
 	template <typename T>
 	static T* CreateObj(const string& strTag, class CLayer* pLayer = NULL) {
 		T* pObj = new T;
+
+		pObj->SetTag(strTag);
+
 		if (!pObj->Init()) {
 			SAFE_RELEASE(pObj);
 			return NULL;
@@ -97,7 +113,31 @@ public:
 			pLayer->AddObject(pObj);
 		}
 
+		AddObj(pObj);
+
 		return pObj;
 	}
+
+	static CObj* CreateCloneObj(const string& strPrototypeKey, 
+		const string& strTag, class CLayer* pLayer = NULL);
+
+	template <typename T>
+	static T* CreatePrototype(const string& strTag) {
+		T* pObj = new T;
+
+		pObj->SetTag(strTag);
+
+		if (!pObj->Init()) {
+			SAFE_RELEASE(pObj);
+			return NULL;
+		}
+		pObj->AddRef();
+		m_mapPrototype.insert(make_pair(strTag, pObj));
+		return pObj;
+	}
+
+private:
+	static CObj* FindPrototype(const string& strKey);
+
 };
 

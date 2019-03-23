@@ -17,6 +17,25 @@ private:
 	string m_strTag;
 	int	m_iZOrder;			// 레이어 중 어떤 것부터 출력할지 결정(나중에 출력할 것이 먼저 출력할 것을 덮어버린다.
 	list<class CObj*> m_ObjList;
+	bool m_bEnable;
+	bool m_bLife;
+
+public:
+	void SetEnable(bool bEnable) {
+		m_bEnable = bEnable;
+	}
+
+	void Die() {
+		m_bLife = false;
+	}
+
+	bool GetEnable() const {
+		return m_bEnable;
+	}
+
+	bool GetLife() const {
+		return m_bLife;
+	}
 
 public:
 	void SetTag(const string& strTag) {
