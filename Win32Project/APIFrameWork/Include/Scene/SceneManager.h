@@ -8,6 +8,11 @@ private:
 	class CScene* m_pNextScene;
 
 public:
+	class CScene* GetScene() const{
+		return m_pScene;
+	}
+
+public:
 	template<typename T>
 	T* CreateScene(SCENE_CREATE sc) {
 		T* pScene = new T;

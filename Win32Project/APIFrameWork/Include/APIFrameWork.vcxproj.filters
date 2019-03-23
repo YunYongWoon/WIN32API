@@ -34,6 +34,15 @@
     <Filter Include="03. Object\02. StaticObj">
       <UniqueIdentifier>{3a519193-3b08-4ab0-8734-e93e2be8de74}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Object\01. MoveObj\01. Player">
+      <UniqueIdentifier>{7e9b6320-7c87-4150-91ee-079857c8b7a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Object\01. MoveObj\03. Bullet">
+      <UniqueIdentifier>{abe5caf4-500c-4023-b6fa-20479cbbabca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Object\01. MoveObj\02. Monster">
+      <UniqueIdentifier>{46e8cbf1-1436-4ccf-ac56-296d83f2ab51}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp">
@@ -66,14 +75,17 @@
     <ClCompile Include="Object\MoveObj.cpp">
       <Filter>03. Object\01. MoveObj</Filter>
     </ClCompile>
-    <ClCompile Include="Object\Player.cpp">
-      <Filter>03. Object\01. MoveObj</Filter>
-    </ClCompile>
     <ClCompile Include="Object\StaticObj.cpp">
       <Filter>03. Object\02. StaticObj</Filter>
     </ClCompile>
+    <ClCompile Include="Object\Bullet.cpp">
+      <Filter>03. Object\01. MoveObj\03. Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Player.cpp">
+      <Filter>03. Object\01. MoveObj\01. Player</Filter>
+    </ClCompile>
     <ClCompile Include="Object\Minion.cpp">
-      <Filter>03. Object\01. MoveObj</Filter>
+      <Filter>03. Object\01. MoveObj\02. Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -122,11 +134,14 @@
     <ClInclude Include="Object\StaticObj.h">
       <Filter>03. Object\02. StaticObj</Filter>
     </ClInclude>
+    <ClInclude Include="Object\Bullet.h">
+      <Filter>03. Object\01. MoveObj\03. Bullet</Filter>
+    </ClInclude>
     <ClInclude Include="Object\Player.h">
-      <Filter>03. Object\01. MoveObj</Filter>
+      <Filter>03. Object\01. MoveObj\01. Player</Filter>
     </ClInclude>
     <ClInclude Include="Object\Minion.h">
-      <Filter>03. Object\01. MoveObj</Filter>
+      <Filter>03. Object\01. MoveObj\02. Monster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -37,8 +37,8 @@ public:
 	void MoveY(float y);
 	void MoveYFromSpeed(float fDeltaTime, MOVE_DIR eDir);
 	void MoveY(float y, float fDeltaTime);
-	void MoveAngle(float fSpeed);
-	void MoveAngle(float fSpeed, float fTime);
+	void MoveAngle();
+	void MoveAngle(float fDeltaTime);
 
 public:
 	virtual bool Init() = 0;

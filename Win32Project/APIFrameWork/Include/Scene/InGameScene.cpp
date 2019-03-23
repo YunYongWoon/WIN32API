@@ -1,6 +1,7 @@
 #include "InGameScene.h"
 #include "../Object/Player.h"
 #include "../Object/Minion.h"
+#include "../Object/Bullet.h"
 #include "Layer.h"
 
 CInGameScene::CInGameScene() {
@@ -23,6 +24,10 @@ bool CInGameScene::Init() {
 	CMinion* pMinion = CObj::CreateObj<CMinion>("Minion", pLayer);
 	SAFE_RELEASE(pMinion);
 
+	// 총알 프로토타입
+	CBullet* pBullet = CScene::CreatePrototype<CBullet>("Bullet");
+	pBullet->SetSize(50.f, 50.f);
+	SAFE_RELEASE(pBullet);
 
 	return true;
 }
