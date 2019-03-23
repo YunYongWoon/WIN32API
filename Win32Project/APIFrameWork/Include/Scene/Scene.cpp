@@ -2,8 +2,8 @@
 #include "Layer.h"
 
 CScene::CScene() {
-	CLayer* pLayer = CreateLayer("Default",INT_MIN);
-	pLayer = CreateLayer("UI", INT_MAX);
+	CLayer* pLayer = CreateLayer("UI",INT_MAX);
+	pLayer = CreateLayer("Default");
 }
 
 CScene::~CScene() {

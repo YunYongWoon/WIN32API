@@ -24,5 +24,7 @@ private:\
 #define GET_SINGLE(Type) Type::GetInst()
 #define DESTROY_SINGLE(Type)	Type::DestroyInst()
 
+#define GETRESOLUTION CCore::GetInst()->GetResolution()
+
 	
 

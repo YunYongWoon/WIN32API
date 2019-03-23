@@ -6,6 +6,9 @@ CCore* CCore::m_pInst = NULL;
 bool CCore::m_bLoop = true;
 
 CCore::CCore() {
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF|_CRTDBG_LEAK_CHECK_DF);
+	// _CrtSetBreakAlloc();      // 메모리 릭 부분을 바로 찾아줌
+
 }
 
 
@@ -32,7 +35,6 @@ bool CCore::Init(HINSTANCE hInst) {
 		return false;
 
 	// 장면관리자 초기화
-	DESTROY_SINGLE(CTimer);
 	if (!GET_SINGLE(CSceneManager)->Init())
 		return false;
 

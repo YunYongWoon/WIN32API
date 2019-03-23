@@ -72,6 +72,9 @@
     <ClCompile Include="Object\StaticObj.cpp">
       <Filter>03. Object\02. StaticObj</Filter>
     </ClCompile>
+    <ClCompile Include="Object\Minion.cpp">
+      <Filter>03. Object\01. MoveObj</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -120,6 +123,9 @@
       <Filter>03. Object\02. StaticObj</Filter>
     </ClInclude>
     <ClInclude Include="Object\Player.h">
+      <Filter>03. Object\01. MoveObj</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Minion.h">
       <Filter>03. Object\01. MoveObj</Filter>
     </ClInclude>
   </ItemGroup>

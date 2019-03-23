@@ -4,7 +4,7 @@
 class CRef {
 protected:
 	CRef();
-	virtual ~CRef();
+	virtual ~CRef() = 0;
 
 protected:
 	int m_iRef;

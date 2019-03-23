@@ -14,6 +14,11 @@ private:
 	HWND m_hWnd;
 	HDC m_hDC;
 	RESOLUTION m_tRS;
+
+public:
+	RESOLUTION GetResolution() const {
+		return m_tRS;
+	}
 	
 
 public:
