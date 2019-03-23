@@ -16,6 +16,11 @@ private:
 	float m_fDist;
 
 public:
+	void SetBulletDistance(float fDist) {
+		m_fLimitDist = fDist;
+	}
+
+public:
 	virtual bool Init();
 	virtual int Update(float fDeltaTime);
 	virtual int LateUpdate(float fDeltaTime);

@@ -18,7 +18,8 @@ typedef struct _tagPosition {
 	}
 
 	_tagPosition(const _tagPosition& pos){
-
+		x = pos.x;
+		y = pos.y;
 	}
 
 	_tagPosition(const POINT& pt) {

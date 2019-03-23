@@ -13,6 +13,8 @@ private:
 
 private:
 	MOVE_DIR m_eDir;
+	float m_fFireTime;
+	float m_fFireTimeLimit;
 
 public:
 	virtual bool Init();
@@ -21,5 +23,8 @@ public:
 	virtual void Collision(float fDeltaTime);
 	virtual void Render(HDC hDC, float fDeltaTime);
 	virtual CMinion* Clone();
+
+private:
+	void Fire(); 
 };
 

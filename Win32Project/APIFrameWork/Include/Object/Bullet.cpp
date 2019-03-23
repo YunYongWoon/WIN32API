@@ -15,6 +15,7 @@ CBullet::~CBullet() {
 }
 
 bool CBullet::Init() {
+	SetSpeed(800.f);
 	return true;
 }
 
@@ -26,7 +27,7 @@ int CBullet::Update(float fDeltaTime) {
 
 	if (m_fDist >= m_fLimitDist)
 		Die();
-
+	
 	return 0; 
 }
 

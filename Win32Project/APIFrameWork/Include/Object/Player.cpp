@@ -66,7 +66,7 @@ CPlayer * CPlayer::Clone() {
 void CPlayer::Fire() {
 	CObj* pBullet = CObj::CreateCloneObj("Bullet", "PlayerBullet",m_pLayer);
 
-	pBullet->SetPos(m_tPos.x + m_tSize.x,
+ 	pBullet->SetPos(m_tPos.x + m_tSize.x,
 		(m_tPos.y + m_tPos.y + m_tSize.y) / 2.f - pBullet->GetSize().y / 2.f);
 
 	SAFE_RELEASE(pBullet);

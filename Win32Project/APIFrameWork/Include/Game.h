@@ -13,6 +13,8 @@ using namespace std;
 #include "Type.h"
 #include "Flag.h"
 
+#define PI 3.141592f
+
 template <typename T>
 void Safe_Delete_VecList(T& p) {
 	T::iterator iter;
