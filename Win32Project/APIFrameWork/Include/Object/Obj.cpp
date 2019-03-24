@@ -2,18 +2,24 @@
 #include "../Scene/Layer.h"
 #include "../Scene/SceneManager.h"
 #include "../Scene/Scene.h"
+#include "../Resources/ResourceManager.h"
+#include "../Resources/Texture.h"
 
 list<CObj*> CObj::m_ObjList;
 
-CObj::CObj() { 
+CObj::CObj() : m_pTexture(NULL) { 
 }
 
 CObj::CObj(const CObj & obj) {
 	*this = obj;
+
+	if (m_pTexture)
+		m_pTexture->AddRef();
 }
 
 
 CObj::~CObj() {
+	SAFE_RELEASE(m_pTexture);
 }
 
 void CObj::AddObj(CObj * pObj) {
@@ -65,6 +71,20 @@ void CObj::EraseObj() {
 }
 
 
+void CObj::SetTexture(CTexture * pTexture) {
+	SAFE_RELEASE(m_pTexture);
+	m_pTexture = pTexture;
+
+	if (pTexture)
+		pTexture->AddRef();
+}
+
+void CObj::SetTexture(const string & strKey, const wchar_t * pFileName, const string & strPathKey) {
+	SAFE_RELEASE(m_pTexture);
+	m_pTexture = GET_SINGLE(CResourceManager)->LoadTexture(strKey, pFileName, strPathKey);
+
+}
+
 bool CObj::Init() {
 	return true;
 }
@@ -86,7 +106,9 @@ void CObj::Collision(float fDeltaTime) {
 }
 
 void CObj::Render(HDC hDC, float fDeltaTime) {
-
+	if (m_pTexture) {
+		BitBlt(hDC, m_tPos.x, m_tPos.y, m_tSize.x, m_tSize.y, m_pTexture->GetDC(), 0, 0, SRCCOPY);
+	}
 }
 
 CObj * CObj::CreateCloneObj(const string & strPrototypeKey, 

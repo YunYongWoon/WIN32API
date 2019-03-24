@@ -6,6 +6,8 @@
 #include <unordered_map>
 #include <crtdbg.h>
 
+#pragma comment(lib,"msimg32")
+
 using namespace std;
 
 #include "resource.h"
@@ -15,6 +17,7 @@ using namespace std;
 
 #define PI 3.141592f
 
+// PATH Key
 #define ROOT_PATH		"RootPath"
 #define TEXTURE_PATH	"TexturePath"
 

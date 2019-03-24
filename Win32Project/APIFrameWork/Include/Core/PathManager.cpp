@@ -16,7 +16,7 @@ bool CPathManager::Init() {
 
 	for (int i = lstrlen(strPath) - 1; i >= 0; i--) {
 		if (strPath[i] == '/' || strPath[i] == '\\') {
-			memset(strPath + (i + 1), 0, sizeof(wchar_t)* (MAX_PATH - (i + 1)));
+			memset(strPath + (i + 1), 0, sizeof(wchar_t) * (MAX_PATH - (i + 1)));
 			break;
 		}
 	}
@@ -37,6 +37,8 @@ bool CPathManager::CreatePath(const string & strKey, const wchar_t * pPath, cons
 	
 	if (pBasePath)
 		strPath = pBasePath;
+
+	strPath += pPath;
 
 	m_mapPath.insert(make_pair(strKey, strPath));
 
