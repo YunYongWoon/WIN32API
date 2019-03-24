@@ -12,9 +12,10 @@ CPlayer::~CPlayer() {
 }
 
 bool CPlayer::Init() {
-	SetPos(100.f, 100.f);
+	SetPos(0.f, 0.f);
 	SetSize(225.f, 225.f);
 	SetSpeed(400.f);
+	SetPivot(0.f, 0.f);
 
 	SetTexture("player", L"HoTS.bmp");
 

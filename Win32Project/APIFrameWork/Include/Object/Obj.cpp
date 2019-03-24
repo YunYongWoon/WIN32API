@@ -107,7 +107,9 @@ void CObj::Collision(float fDeltaTime) {
 
 void CObj::Render(HDC hDC, float fDeltaTime) {
 	if (m_pTexture) {
-		BitBlt(hDC, m_tPos.x, m_tPos.y, m_tSize.x, m_tSize.y, m_pTexture->GetDC(), 0, 0, SRCCOPY);
+		POSITION tPos = m_tPos - m_tSize * m_tPivot;
+
+		BitBlt(hDC, tPos.x, tPos.y, m_tSize.x, m_tSize.y, m_pTexture->GetDC(), 0, 0, SRCCOPY);
 	}
 }
 

@@ -50,7 +50,7 @@ protected:
 	string m_strTag;
 	POSITION m_tPos;
 	_SIZE m_tSize;
-	POSITION m_tPovot;
+	POSITION m_tPivot;
 	class CTexture*  m_pTexture;
 
 public:
@@ -64,6 +64,10 @@ public:
 
 	_SIZE GetSize() const {
 		return m_tSize;
+	}
+
+	POSITION GetPivot() const {
+		return m_tPivot;
 	}
 
 public:
@@ -88,6 +92,17 @@ public:
 		m_tSize.x = x;
 		m_tSize.y = y;
 	}
+
+	void SetPivot(const _SIZE& tPivot) {
+		m_tPivot = tPivot;
+	}
+
+	void SetPivot(float x, float y) {
+		m_tPivot.x = x;
+		m_tPivot.y = y;
+	}
+
+	
 
 public:
 	void SetTexture(class CTexture* pTexture);
