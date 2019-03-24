@@ -8,12 +8,22 @@ CResourceManager::CResourceManager() {
 
 
 CResourceManager::~CResourceManager() {
+	SAFE_RELEASE(m_pBackBuffer);
 	Safe_Release_Map(m_mapTexture);
+}
+
+CTexture * CResourceManager::GetBackBuffer() const {
+	m_pBackBuffer->AddRef();
+
+	return m_pBackBuffer;
 }
 
 bool CResourceManager::Init(HINSTANCE hInst,HDC hDC) {
 	m_hInst = hInst;
 	m_hDC = hDC;
+
+	// 백버퍼를 불러온다.
+	m_pBackBuffer = LoadTexture("BackBuffer",L"BackBuffer.bmp");
 	
 	return true;
 }
