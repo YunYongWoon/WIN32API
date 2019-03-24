@@ -11,7 +11,6 @@ CMinion::CMinion(const CMinion & minion) : CMoveObj(minion) {
 	m_fFireTimeLimit = minion.m_fFireTimeLimit;
 }
 
-
 CMinion::~CMinion() {
 }
 

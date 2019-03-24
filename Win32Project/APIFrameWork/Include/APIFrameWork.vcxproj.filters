@@ -43,6 +43,12 @@
     <Filter Include="03. Object\01. MoveObj\02. Monster">
       <UniqueIdentifier>{46e8cbf1-1436-4ccf-ac56-296d83f2ab51}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Core\02. Path">
+      <UniqueIdentifier>{bcb3b755-7542-4872-9c52-aebaec4e65c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Resources">
+      <UniqueIdentifier>{f375e0ac-b8c6-434f-8cf3-f526bc000774}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp">
@@ -86,6 +92,15 @@
     </ClCompile>
     <ClCompile Include="Object\Minion.cpp">
       <Filter>03. Object\01. MoveObj\02. Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\PathManager.cpp">
+      <Filter>01. Core\02. Path</Filter>
+    </ClCompile>
+    <ClCompile Include="Resources\ResourceManager.cpp">
+      <Filter>04. Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Resources\Texture.cpp">
+      <Filter>04. Resources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -142,6 +157,15 @@
     </ClInclude>
     <ClInclude Include="Object\Minion.h">
       <Filter>03. Object\01. MoveObj\02. Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\PathManager.h">
+      <Filter>01. Core\02. Path</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources\ResourceManager.h">
+      <Filter>04. Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources\Texture.h">
+      <Filter>04. Resources</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
