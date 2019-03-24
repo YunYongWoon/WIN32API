@@ -69,6 +69,11 @@ CPlayer * CPlayer::Clone() {
 void CPlayer::Fire() {
 	CObj* pBullet = CObj::CreateCloneObj("Bullet", "PlayerBullet",m_pLayer);
 
+	// 오른쪽 가운데를 구한다.
+	POSITION tPos;
+	tPos.x = m_tPos.x + (1.f - m_tPivot.x) * m_tSize.x;
+	tPos.y = m_tPos.y + (0.5f - m_tPivot.y) * m_tSize.y;
+
  	pBullet->SetPos(m_tPos.x + m_tSize.x,
 		(m_tPos.y + m_tPos.y + m_tSize.y) / 2.f - pBullet->GetSize().y / 2.f);
 

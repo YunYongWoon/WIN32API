@@ -3,9 +3,6 @@
 
 class CCore
 {
-	
-DECLARE_SINGLE(CCore)
-
 private:
 	static bool m_bLoop;
 
@@ -39,5 +36,7 @@ private:
 
 public:
 	static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+
+	DECLARE_SINGLE(CCore)
 };
 
