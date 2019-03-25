@@ -104,12 +104,12 @@ void CCore::Logic() {
 }
 
 void CCore::Input(float fDeltaTime) {
+	GET_SINGLE(CInput)->Update(fDeltaTime);
 	GET_SINGLE(CSceneManager)->Input(fDeltaTime);
 	GET_SINGLE(CCamera)->Input(fDeltaTime);
 }
 
 int CCore::Update(float fDeltaTime) {
-	GET_SINGLE(CInput)->Update(fDeltaTime);
 	GET_SINGLE(CSceneManager)->Update(fDeltaTime);
 	GET_SINGLE(CCamera)->Update(fDeltaTime);
 	return 0;

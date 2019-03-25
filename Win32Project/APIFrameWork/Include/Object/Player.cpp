@@ -37,11 +37,9 @@ void CPlayer::Input(float fDeltaTime) {
 	if (KEYPRESS("MoveRight")) {
 		MoveXFromSpeed(fDeltaTime, MD_FRONT);
 	}
+
 	if (KEYDOWN("Fire")) {
 		Fire();
-	}
-	if (KEYDOWN("Skill1")) {
-		MessageBox(NULL, L"Skill1", L"Skill1", MB_OK);
 	}
 }
 

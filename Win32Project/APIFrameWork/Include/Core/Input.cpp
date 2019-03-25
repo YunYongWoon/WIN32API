@@ -27,27 +27,28 @@ void CInput::Update(float fDeltaTime) {
 
 	for (iter = m_mapKey.begin(); iter != iterEnd; ++iter) {
 		int iPushCount = 0;
-		for (size_t i = 0; i < iter->second->vecKey.size(); i++) {
+		for (size_t i = 0; i < iter->second->vecKey.size(); ++i) {
 			if (GetAsyncKeyState(iter->second->vecKey[i]) & 0x8000)
 				++iPushCount;
 		}
 
 		if (iPushCount == iter->second->vecKey.size()) {
-			if (!iter->second->bDown && !iter->second->bPress)
-				iter->second->bDown = true;
-			else if (iter->second->bDown && !iter->second->bPress) {
+			if (!iter->second->bDown && !iter->second->bPress) {
 				iter->second->bPress = true;
+				iter->second->bDown = true;
+			}
+			else if (iter->second->bDown)
 				iter->second->bDown = false;
+		}
+
+		else {
+			if (iter->second->bDown || iter->second->bPress) {
+				iter->second->bUp = true;
+				iter->second->bDown = false;
+				iter->second->bPress = false;
 			}
-			else {
-				if (iter->second->bDown || iter->second->bPress) {
-					iter->second->bUp = true;
-					iter->second->bDown = false;
-					iter->second->bPress = false;
-				}
-				else if (iter->second->bUp)
-					iter->second->bUp = false;
-			}
+			else if (iter->second->bUp)
+				iter->second->bUp = false;
 		}
 	}
 }
@@ -55,7 +56,7 @@ void CInput::Update(float fDeltaTime) {
 bool CInput::KeyDown(const string & strKey) const {
 	PKEYINFO pInfo = FindKey(strKey);
 
-	if (pInfo)
+	if (!pInfo)
 		return false;
 	return pInfo->bDown;
 }
@@ -63,7 +64,7 @@ bool CInput::KeyDown(const string & strKey) const {
 bool CInput::KeyPress(const string & strKey) const {
 	PKEYINFO pInfo = FindKey(strKey);
 
-	if (pInfo)
+	if (!pInfo)
 		return false;
 
 	return pInfo->bPress;
@@ -72,7 +73,7 @@ bool CInput::KeyPress(const string & strKey) const {
 bool CInput::KeyUp(const string & strKey) const {
 	PKEYINFO pInfo = FindKey(strKey);
 
-	if (pInfo)
+	if (!pInfo)
 		return false;
 
 	return pInfo->bUp;

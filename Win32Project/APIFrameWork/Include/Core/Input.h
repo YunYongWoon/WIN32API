@@ -28,29 +28,28 @@ public:
 	bool AddKey(const T& data) {
 		const char* pTType = typeid(T).name();
 
-		if (strcmp(pTType, "char") == 0 ||
-			strcmp(pTType, "int") == 0) {
+		if (strcmp(pTType, "char") == 0 || strcmp(pTType, "int") == 0) {
 			m_pCreateKey->vecKey.push_back((DWORD)data);
 		}
+
 		else {
 			m_pCreateKey->strName = data;
 			m_mapKey.insert(make_pair(m_pCreateKey->strName, m_pCreateKey));
 		}
-
 		return true;
 	}
 
 	template<typename T, typename...Types>
-	bool AddKey(const T& data, const Types&...arg) {
+	bool AddKey(const T& data, const Types& ... arg) {
 		if (!m_pCreateKey)
 			m_pCreateKey = new KEYINFO;
 
 		const char* pTType = typeid(T).name();
 
-		if (strcmp(pTType, "char") == 0 ||
-			strcmp(pTType, "int") == 0) {
+		if (strcmp(pTType, "char") == 0 || strcmp(pTType, "int") == 0) {
 			m_pCreateKey->vecKey.push_back((DWORD)data);
 		}
+
 		else {
 			m_pCreateKey->strName = data;
 			m_mapKey.insert(make_pair(m_pCreateKey->strName, m_pCreateKey));
