@@ -19,7 +19,6 @@ bool CInGameScene::Init() {
 
 	CLayer* pLayer = FindLayer("Default");
 
-
 	CLayer* pStageLayer = FindLayer("Stage");
 	CStage* pStage = CObj::CreateObj<CStage>("Stage", pLayer);
 	SAFE_RELEASE(pStage);
