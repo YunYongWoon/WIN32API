@@ -26,5 +26,7 @@ private:\
 
 #define GETRESOLUTION  CCore::GetInst()->GetResolution()
 
-	
+#define KEYDOWN(key)	CInput::GetInst()->KeyDown(key)
+#define KEYPRESS(key)	CInput::GetInst()->KeyPress(key)
+#define KEYUP(key)		CInput::GetInst()->KeyUp(key)
 

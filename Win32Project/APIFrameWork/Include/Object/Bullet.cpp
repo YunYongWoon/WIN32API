@@ -10,7 +10,6 @@ CBullet::CBullet(const CBullet & bullet) : CMoveObj(bullet) {
 	m_fDist = bullet.m_fDist;
 }
 
-
 CBullet::~CBullet() {
 }
 
