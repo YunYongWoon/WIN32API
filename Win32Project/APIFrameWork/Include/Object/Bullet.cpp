@@ -1,5 +1,5 @@
 #include "Bullet.h"
-
+#include "../Resources/Texture.h"
 
 
 CBullet::CBullet() : m_fDist(0.f), m_fLimitDist(500.f) {
@@ -16,9 +16,14 @@ CBullet::~CBullet() {
 
 bool CBullet::Init() {
 	SetSpeed(800.f);
+	SetPivot(0.5f, 0.5f);
+
+	SetTexture("Bullet", L"Timo.bmp");
+
+	m_pTexture->SetColorKey(63, 72, 204);
 	return true;
 }
-
+ 
 int CBullet::Update(float fDeltaTime) {
 	CMoveObj::Update(fDeltaTime);
 	MoveAngle(fDeltaTime);
@@ -42,7 +47,6 @@ void CBullet::Collision(float fDeltaTime) {
 
 void CBullet::Render(HDC hDC, float fDeltaTime) {
 	CMoveObj::Render(hDC, fDeltaTime);
-	Ellipse(hDC, m_tPos.x, m_tPos.y, m_tPos.x + m_tSize.x, m_tPos.y + m_tSize.y);
 }
 
 CBullet * CBullet::Clone() {

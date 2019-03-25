@@ -54,6 +54,26 @@ protected:
 	class CTexture*  m_pTexture;
 
 public:
+	float GetLeft() const {
+		return m_tPos.x - m_tSize.x * m_tPivot.x;
+	}
+
+	float GetRight() const {
+		return GetLeft() + m_tSize.x;
+	}
+
+	float GetTop() const {
+		return m_tPos.y - m_tSize.y * m_tPivot.y;
+	}
+
+	float GetBottom() const {
+		return GetTop() + m_tSize.y;
+	}
+
+	POSITION GetCenter() const {
+		return POSITION(GetLeft() + m_tSize.x / 2.f, GetTop() + m_tSize.y / 2.f);
+	}
+
 	string GetTag() const {
 		return m_strTag;
 	}
