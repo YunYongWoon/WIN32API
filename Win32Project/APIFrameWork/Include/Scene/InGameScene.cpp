@@ -4,6 +4,7 @@
 #include "../Object/Bullet.h"
 #include "../Object/Stage.h"
 #include "Layer.h"
+#include "../Core/Camera.h"
 
 CInGameScene::CInGameScene() {
 }
@@ -24,6 +25,8 @@ bool CInGameScene::Init() {
 	SAFE_RELEASE(pStage);
 
 	CPlayer* pPlayer = CObj::CreateObj<CPlayer>("Player", pLayer);
+	GET_SINGLE(CCamera)->SetTarget(pPlayer);
+	GET_SINGLE(CCamera)->SetPivot(0.5f,0.5f);
 	SAFE_RELEASE(pPlayer);
 
 	CMinion* pMinion = CObj::CreateObj<CMinion>("Minion", pLayer);

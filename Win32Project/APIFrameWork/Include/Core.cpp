@@ -4,6 +4,7 @@
 #include "Core\PathManager.h"
 #include "Resources\ResourceManager.h"
 #include "Resources\Texture.h"
+#include "Core\Camera.h"
 
 CCore* CCore::m_pInst = NULL;
 bool CCore::m_bLoop = true;
@@ -16,6 +17,7 @@ CCore::CCore() {
 
 CCore::~CCore() {
 	DESTROY_SINGLE(CSceneManager);
+	DESTROY_SINGLE(CCamera);
 	DESTROY_SINGLE(CResourceManager);
 	DESTROY_SINGLE(CPathManager);
 	DESTROY_SINGLE(CTimer);
@@ -46,6 +48,11 @@ bool CCore::Init(HINSTANCE hInst) {
 
 	// 리소스관리자 초기화
 	if (!GET_SINGLE(CResourceManager)->Init(hInst, m_hDC))
+		return false;
+
+	// 카메라관리자 초기화
+	if (!GET_SINGLE(CCamera)->Init(POSITION(0.f,0.f),
+		m_tRS,RESOLUTION(1920, 1080)))
 		return false;
 
 	// 장면관리자 초기화
@@ -91,10 +98,12 @@ void CCore::Logic() {
 
 void CCore::Input(float fDeltaTime) {
 	GET_SINGLE(CSceneManager)->Input(fDeltaTime);
+	GET_SINGLE(CCamera)->Input(fDeltaTime);
 }
 
 int CCore::Update(float fDeltaTime) {
 	GET_SINGLE(CSceneManager)->Update(fDeltaTime);
+	GET_SINGLE(CCamera)->Update(fDeltaTime);
 	return 0;
 }
 

@@ -12,16 +12,15 @@ CPlayer::~CPlayer() {
 }
 
 bool CPlayer::Init() {
-	SetPos(0.f, 0.f);@
-	SetSize(225.f, 225.f);
+	SetPos(50.f, 50.f);
+	SetSize(100.f, 100.f);
 	SetSpeed(400.f);
-	SetPivot(0.f, 0.f);
+	SetPivot(0.5f, 0.5f);
 
 	SetTexture("player", L"HoTS.bmp");
 
 	return true;
 }
-
 void CPlayer::Input(float fDeltaTime) {
 	CMoveObj::Input(fDeltaTime);
 
@@ -74,8 +73,7 @@ void CPlayer::Fire() {
 	tPos.x = m_tPos.x + (1.f - m_tPivot.x) * m_tSize.x;
 	tPos.y = m_tPos.y + (0.5f - m_tPivot.y) * m_tSize.y;
 
-	pBullet->SetPos(tPos.x,
-		tPos.y - pBullet->GetSize().y / 2.f);
+	pBullet->SetPos(tPos.x, tPos.y - pBullet->GetSize().y / 2.f);
 
 	SAFE_RELEASE(pBullet);
 }
