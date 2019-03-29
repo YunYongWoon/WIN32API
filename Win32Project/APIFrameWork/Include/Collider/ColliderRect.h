@@ -11,6 +11,21 @@ protected:
 	CColliderRect(const CColliderRect& coll);
 	virtual ~CColliderRect();
 
+private:
+	RECTANGLE m_tInfo;
+	RECTANGLE m_tWorldInfo;
+
+public:
+	void SetRect(float l, float t, float r, float b); 
+	
+	RECTANGLE GetInfo() const {
+		return m_tInfo;
+	}
+
+	RECTANGLE GetWorldInfo() const {
+		return m_tWorldInfo;
+	}
+
 public:
 	virtual bool Init();
 	virtual void Input(float fDeltaTime);

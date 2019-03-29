@@ -1,5 +1,6 @@
 #include "Bullet.h"
 #include "../Resources/Texture.h"
+#include "../Collider/ColliderRect.h"
 
 
 CBullet::CBullet() : m_fDist(0.f), m_fLimitDist(500.f) {
@@ -20,6 +21,12 @@ bool CBullet::Init() {
 	SetTexture("Bullet", L"Timo.bmp");
 
 	m_pTexture->SetColorKey(63, 72, 204);
+
+	CColliderRect* pRC = AddCollider<CColliderRect>("Minion");
+
+	pRC->SetRect(-25.f, -25.f, 25.f, 25.f);
+
+	SAFE_RELEASE(pRC);
 	return true;
 }
  

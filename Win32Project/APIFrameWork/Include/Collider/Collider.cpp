@@ -1,6 +1,5 @@
 #include "Collider.h"
-
-
+#include "../Object/Obj.h"
 
 CCollider::CCollider() {
 }

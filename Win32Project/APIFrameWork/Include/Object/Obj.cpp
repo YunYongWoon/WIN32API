@@ -108,10 +108,48 @@ void CObj::Input(float fDeltaTime) {
 }
 
 int CObj::Update(float fDeltaTime) {
+	list<CCollider*>::iterator iter;
+	list<CCollider*>::iterator iterEnd = m_ColliderList.end();
+
+	for (iter = m_ColliderList.begin(); iter != iterEnd; ) {
+		if (!(*iter)->GetEnable()) {
+			iter++;
+			continue;
+		}
+
+		(*iter)->Update(fDeltaTime);
+
+		if (!(*iter)->GetLife()) {
+			SAFE_RELEASE((*iter));
+			iter = m_ColliderList.erase(iter);
+			iterEnd = m_ColliderList.end();
+		}
+		else
+			iter++;
+	}
 	return 0;
 }
 
 int CObj::LateUpdate(float fDeltaTime) {
+	list<CCollider*>::iterator iter;
+	list<CCollider*>::iterator iterEnd = m_ColliderList.end();
+
+	for (iter = m_ColliderList.begin(); iter != iterEnd; ) {
+		if (!(*iter)->GetEnable()) {
+			iter++;
+			continue;
+		}
+
+		(*iter)->LateUpdate(fDeltaTime);
+
+		if (!(*iter)->GetLife()) {
+			SAFE_RELEASE((*iter));
+			iter = m_ColliderList.erase(iter);
+			iterEnd = m_ColliderList.end();
+		}
+		else
+			iter++;
+	}
 	return 0;
 }
 
@@ -130,9 +168,29 @@ void CObj::Render(HDC hDC, float fDeltaTime) {
 		}
 		else{
 			BitBlt(hDC, tPos.x, tPos.y, m_tSize.x, m_tSize.y, m_pTexture->GetDC(), 0, 0, SRCCOPY);
-		}
-		
+		}	
 	}
+
+	list<CCollider*>::iterator iter;
+	list<CCollider*>::iterator iterEnd = m_ColliderList.end();
+
+	for (iter = m_ColliderList.begin(); iter != iterEnd; ) {
+		if (!(*iter)->GetEnable()) {
+			iter++;
+			continue;
+		}
+
+		(*iter)->Render(hDC, fDeltaTime);
+
+		if (!(*iter)->GetLife()) {
+			SAFE_RELEASE((*iter));
+			iter = m_ColliderList.erase(iter);
+			iterEnd = m_ColliderList.end();
+		}
+		else
+			iter++;
+	}
+
 }
 
 CObj * CObj::CreateCloneObj(const string & strPrototypeKey, 

@@ -1,5 +1,6 @@
 #include "Layer.h"
 #include "../Object/Obj.h"
+#include "../Collider/CollisionManager.h"
 
 CLayer::CLayer() : 
 	m_iZOrder(0),
@@ -105,13 +106,15 @@ void CLayer::Collision(float fDeltaTime) {
 			++iter;
 			continue;
 		}
-		(*iter)->Collision(fDeltaTime);
+
 		if (!(*iter)->GetLife()) {
 			SAFE_RELEASE((*iter));
 			iter = m_ObjList.erase(iter);
 			iterEnd = m_ObjList.end();
 		}
 		else {
+			GET_SINGLE(CCollisionManager)->AddObject(*iter);
+
 			++iter;
 		}
 	}

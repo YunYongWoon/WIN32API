@@ -1,5 +1,6 @@
 #include "Minion.h"
 #include "../Core.h"
+#include "../Collider/ColliderRect.h"
 
 
 CMinion::CMinion() : m_fFireTime(0.f), m_fFireTimeLimit(1.1f){
@@ -23,6 +24,12 @@ bool CMinion::Init() {
 	SetTexture("Minion", L"LOL.bmp");
 
 	m_eDir = MD_FRONT;
+
+	CColliderRect* pRC = AddCollider<CColliderRect>("Minion");
+
+	pRC->SetRect(-50.f, -50.f, 50.f, 50.f);
+
+	SAFE_RELEASE(pRC);
 	return true;
 }
 
