@@ -44,14 +44,13 @@ public:
 protected:
 	int m_iRef;
 
-
-
 protected:
 	string m_strTag;
 	POSITION m_tPos;
 	_SIZE m_tSize;
 	POSITION m_tPivot;
 	class CTexture*  m_pTexture;
+	list<class CCollider*> m_ColliderList;
 
 public:
 	float GetLeft() const {
