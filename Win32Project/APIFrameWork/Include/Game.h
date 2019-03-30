@@ -7,6 +7,7 @@
 #include <crtdbg.h>
 #include <typeinfo>
 #include <string>
+#include <functional>
 
 #pragma comment(lib,"msimg32")
 

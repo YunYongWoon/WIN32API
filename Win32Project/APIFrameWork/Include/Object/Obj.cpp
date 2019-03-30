@@ -19,11 +19,14 @@ CObj::CObj(const CObj & obj) {
 		m_pTexture->AddRef();
 
 	m_ColliderList.clear();
+
 	list<CCollider*>::const_iterator iter;
 	list<CCollider*>::const_iterator iterEnd = obj.m_ColliderList.end();
 
-	for (iter = obj.m_ColliderList.begin(); iter != iterEnd; iter++) {
+	for (iter = obj.m_ColliderList.begin(); iter != iterEnd; ++iter) {
 		CCollider* pColl = (*iter)->Clone();
+
+		pColl->SetObj(this);
 
 		m_ColliderList.push_back(pColl);
 	}
@@ -111,9 +114,9 @@ int CObj::Update(float fDeltaTime) {
 	list<CCollider*>::iterator iter;
 	list<CCollider*>::iterator iterEnd = m_ColliderList.end();
 
-	for (iter = m_ColliderList.begin(); iter != iterEnd; ) {
+	for (iter = m_ColliderList.begin(); iter != iterEnd;) {
 		if (!(*iter)->GetEnable()) {
-			iter++;
+			++iter;
 			continue;
 		}
 
@@ -124,9 +127,11 @@ int CObj::Update(float fDeltaTime) {
 			iter = m_ColliderList.erase(iter);
 			iterEnd = m_ColliderList.end();
 		}
+
 		else
-			iter++;
+			++iter;
 	}
+
 	return 0;
 }
 
@@ -134,9 +139,9 @@ int CObj::LateUpdate(float fDeltaTime) {
 	list<CCollider*>::iterator iter;
 	list<CCollider*>::iterator iterEnd = m_ColliderList.end();
 
-	for (iter = m_ColliderList.begin(); iter != iterEnd; ) {
+	for (iter = m_ColliderList.begin(); iter != iterEnd;) {
 		if (!(*iter)->GetEnable()) {
-			iter++;
+			++iter;
 			continue;
 		}
 
@@ -147,8 +152,9 @@ int CObj::LateUpdate(float fDeltaTime) {
 			iter = m_ColliderList.erase(iter);
 			iterEnd = m_ColliderList.end();
 		}
+
 		else
-			iter++;
+			++iter;
 	}
 	return 0;
 }
@@ -174,9 +180,9 @@ void CObj::Render(HDC hDC, float fDeltaTime) {
 	list<CCollider*>::iterator iter;
 	list<CCollider*>::iterator iterEnd = m_ColliderList.end();
 
-	for (iter = m_ColliderList.begin(); iter != iterEnd; ) {
+	for (iter = m_ColliderList.begin(); iter != iterEnd;) {
 		if (!(*iter)->GetEnable()) {
-			iter++;
+			++iter;
 			continue;
 		}
 
@@ -187,8 +193,9 @@ void CObj::Render(HDC hDC, float fDeltaTime) {
 			iter = m_ColliderList.erase(iter);
 			iterEnd = m_ColliderList.end();
 		}
+
 		else
-			iter++;
+			++iter;
 	}
 
 }

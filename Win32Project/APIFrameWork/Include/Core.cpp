@@ -46,7 +46,6 @@ bool CCore::Init(HINSTANCE hInst) {
 	if (!GET_SINGLE(CTimer)->Init())
 		return false;
 
-
 	// 경로관리자 초기화
 	if (!GET_SINGLE(CPathManager)->Init())
 		return false;
@@ -67,6 +66,7 @@ bool CCore::Init(HINSTANCE hInst) {
 	// 장면관리자 초기화
 	if (!GET_SINGLE(CSceneManager)->Init())
 		return false;
+
 
 	return true;
 }

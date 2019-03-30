@@ -53,6 +53,11 @@ protected:
 	list<class CCollider*> m_ColliderList;
 
 public:
+	const list<CCollider*>* GetColliderList() const {
+		return &m_ColliderList;
+	}
+
+public:
 	template<typename T>
 	T* AddCollider(const string& strTag) {
 		T* pCollider = new T;
@@ -66,6 +71,8 @@ public:
 
 		pCollider->AddRef();
 		m_ColliderList.push_back(pCollider);
+
+		return pCollider;
 	}
 
 	bool CheckCollider() {
@@ -76,7 +83,7 @@ public:
 	float GetLeft() const {
 		return m_tPos.x - m_tSize.x * m_tPivot.x;
 	}
-
+	 
 	float GetRight() const {
 		return GetLeft() + m_tSize.x;
 	}
