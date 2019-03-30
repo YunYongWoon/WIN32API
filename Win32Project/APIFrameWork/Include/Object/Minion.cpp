@@ -21,7 +21,7 @@ bool CMinion::Init() {
 	SetSpeed(300.f);
 	SetPivot(0.5f, 0.5f);
 
-	SetTexture("Minion", L"Minion.bmp");
+	SetTexture("Minion", L"LOL.bmp");
 
 	m_eDir = MD_FRONT;
 
