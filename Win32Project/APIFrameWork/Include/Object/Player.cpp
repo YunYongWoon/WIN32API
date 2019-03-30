@@ -1,6 +1,8 @@
 #include "Player.h"
 #include "../Core/Input.h"
 #include "Bullet.h"
+#include "../Collider/ColliderRect.h"
+#include "../Core/Camera.h"
 
 CPlayer::CPlayer() {
 }
@@ -20,6 +22,16 @@ bool CPlayer::Init() {
 	SetPivot(0.5f, 0.5f);
 
 	SetTexture("player", L"HoTS.bmp");
+
+	CColliderRect* pRC = AddCollider<CColliderRect>("PlayerBody");
+
+	pRC->SetRect(-50.f, -50.f, 50.f, 50.f);
+	pRC->AddCollisionFunction(CS_ENTER, this,
+		&CPlayer::Hit);
+
+	SAFE_RELEASE(pRC);
+
+	m_iHP = 0;
 
 	return true;
 }
@@ -60,6 +72,13 @@ void CPlayer::Collision(float fDeltaTime) {
 
 void CPlayer::Render(HDC hDC, float fDeltaTime) {
 	CMoveObj::Render(hDC, fDeltaTime);
+	wchar_t strHP[32] = {};
+	wsprintf(strHP, L"Count : %d", m_iHP);
+	POSITION tPos = m_tPos - m_tSize * m_tPivot;
+	tPos -= GET_SINGLE(CCamera)->GetPos();
+
+	TextOut(hDC, tPos.x, tPos.y, strHP, lstrlen(strHP));
+
 	//Rectangle(hDC, m_tPos.x, m_tPos.y, m_tPos.x + m_tSize.x, m_tPos.y + m_tSize.y);
 }
 
@@ -80,4 +99,8 @@ void CPlayer::Fire() {
 	pBullet->SetPos(tPos);
 
 	SAFE_RELEASE(pBullet);
+}
+
+void CPlayer::Hit(CCollider * pSrc, CCollider * pDest, float fDeltaTime) {
+	m_iHP += 1;
 }

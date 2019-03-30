@@ -12,6 +12,9 @@ private:
 	CPlayer(const CPlayer& player);
 	~CPlayer();
 
+private:
+	int m_iHP;
+
 public:
 	virtual bool Init();
 	virtual void Input(float fDeltaTime);
@@ -23,5 +26,9 @@ public:
 
 private:
 	void Fire();
+
+public:
+	void Hit(class CCollider* pSrc,
+		class CCollider* pDest, float fDeltaTime);
 };
 
