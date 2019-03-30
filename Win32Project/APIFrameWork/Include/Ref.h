@@ -10,6 +10,7 @@ protected:
 	int m_iRef;
 	bool m_bEnable;
 	bool m_bLife;
+	string m_strTag;
 
 public:
 	void AddRef() {
@@ -24,6 +25,14 @@ public:
 		}
 
 		return m_iRef;
+	}
+
+	string GetTag() const {
+		return m_strTag;
+	}
+
+	void SetTag(const string& strTag) {
+		m_strTag = strTag;
 	}
 
 	void SetEnable(bool bEnable) {

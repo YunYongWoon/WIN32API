@@ -5,7 +5,6 @@
 #include "../Resources/ResourceManager.h"
 #include "../Resources/Texture.h"
 #include "../Core/Camera.h"
-#include "../Collider/Collider.h"
 
 list<CObj*> CObj::m_ObjList;
 

@@ -100,5 +100,7 @@ public:
 
 protected:
 	bool CollisionRectToRect(const RECTANGLE& src, const RECTANGLE& dest);
+	bool CollisionRectToSphere(const RECTANGLE& src, const SPHERE& dest);
+	bool CollisionSphereToSphere(const SPHERE& src, const SPHERE& dest);
 };
 

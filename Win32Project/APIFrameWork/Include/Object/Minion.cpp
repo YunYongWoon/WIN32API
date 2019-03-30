@@ -77,7 +77,7 @@ CMinion * CMinion::Clone() {
 }
 
 void CMinion::CollisionBullet(CCollider * pSrc, CCollider * pDest, float fDeltaTime) {
-	MessageBox(NULL, L"面倒", L"面倒", MB_OK);
+	//MessageBox(NULL, L"面倒", L"面倒", MB_OK);
 }
 
 void CMinion::Fire() {

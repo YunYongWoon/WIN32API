@@ -151,6 +151,7 @@
   <ItemGroup>
     <ClCompile Include="Collider\Collider.cpp" />
     <ClCompile Include="Collider\ColliderRect.cpp" />
+    <ClCompile Include="Collider\ColliderSphere.cpp" />
     <ClCompile Include="Collider\CollisionManager.cpp" />
     <ClCompile Include="Core.cpp" />
     <ClCompile Include="Core\Camera.cpp" />
@@ -158,6 +159,7 @@
     <ClCompile Include="Core\PathManager.cpp" />
     <ClCompile Include="Core\Timer.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Math.cpp" />
     <ClCompile Include="Object\Bullet.cpp" />
     <ClCompile Include="Object\Minion.cpp" />
     <ClCompile Include="Object\MoveObj.cpp" />
@@ -176,6 +178,7 @@
   <ItemGroup>
     <ClInclude Include="Collider\Collider.h" />
     <ClInclude Include="Collider\ColliderRect.h" />
+    <ClInclude Include="Collider\ColliderSphere.h" />
     <ClInclude Include="Collider\CollisionManager.h" />
     <ClInclude Include="Core.h" />
     <ClInclude Include="Core\Camera.h" />
@@ -185,6 +188,7 @@
     <ClInclude Include="Flag.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Macro.h" />
+    <ClInclude Include="Math.h" />
     <ClInclude Include="Object\Bullet.h" />
     <ClInclude Include="Object\Minion.h" />
     <ClInclude Include="Object\MoveObj.h" />

@@ -28,5 +28,9 @@ public:
 	virtual void Render(HDC hDC, float fDeltaTime);
 	virtual CBullet* Clone();
 
+public:
+	void Hit(class CCollider* pSrc,
+		class CCollider* pDest, float fDeltaTime);
+
 };
 

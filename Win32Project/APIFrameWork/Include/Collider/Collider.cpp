@@ -1,5 +1,6 @@
 #include "Collider.h"
 #include "../Object/Obj.h"
+#include "../Math.h"
 
 CCollider::CCollider() {
 }
@@ -46,4 +47,14 @@ bool CCollider::CollisionRectToRect(const RECTANGLE & src, const RECTANGLE & des
 		return false;
 
 	return true;
+}
+
+bool CCollider::CollisionRectToSphere(const RECTANGLE & src, const SPHERE & dest) {
+	return true;
+}
+
+bool CCollider::CollisionSphereToSphere(const SPHERE & src, const SPHERE & dest) {
+	float fDist = CMath::Distance(src.tCenter, dest.tCenter);
+
+	return fDist<=src.fRadius + dest.fRadius;
 }

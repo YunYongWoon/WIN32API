@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../Ref.h"
+#include "../Collider/Collider.h" 
 class CObj : public CRef
 {
 protected:
@@ -50,11 +51,27 @@ protected:
 	_SIZE m_tSize;
 	POSITION m_tPivot;
 	class CTexture*  m_pTexture;
-	list<class CCollider*> m_ColliderList;
+	list<CCollider*> m_ColliderList;
 
 public:
 	const list<CCollider*>* GetColliderList() const {
 		return &m_ColliderList;
+	}
+
+	template <typename T>
+	void AddCollisionFunction(const string& strTag,
+		COLLISION_STATE eState, T* pObj,
+		void(T::*pFunc)(CCollider*, CCollider*, float)) {
+		list<class CCollider*>::iterator iter;
+		list<class CCollider*>::iterator iterEnd = m_ColliderList.end();
+
+		for (iter = m_ColliderList.begin(); iter != iterEnd; ++iter) {
+			if ((*iter)->GetTag() == strTag) {
+				(*iter)->AddCollisionFunction(eState, pObj, pFunc);
+				break;
+			}
+		}
+
 	}
 
 public:
@@ -63,6 +80,7 @@ public:
 		T* pCollider = new T;
 
 		pCollider->SetObj(this);
+		pCollider->SetTag(strTag);
 
 		if (!pCollider->Init()) {
 			SAFE_RELEASE(pCollider);

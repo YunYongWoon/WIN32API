@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "../Core/Input.h"
+#include "Bullet.h"
 
 CPlayer::CPlayer() {
 }
@@ -68,6 +69,8 @@ CPlayer * CPlayer::Clone() {
 
 void CPlayer::Fire() {
 	CObj* pBullet = CObj::CreateCloneObj("Bullet", "PlayerBullet",m_pLayer);
+
+	pBullet->AddCollisionFunction("BulletBody", CS_ENTER, (CBullet*)pBullet, &CBullet::Hit);
 
 	// 오른쪽 가운데를 구한다.
 	POSITION tPos;
