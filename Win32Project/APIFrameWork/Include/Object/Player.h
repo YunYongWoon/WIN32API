@@ -30,5 +30,7 @@ private:
 public:
 	void Hit(class CCollider* pSrc,
 		class CCollider* pDest, float fDeltaTime);
+	void HitStay(class CCollider* pSrc,
+		class CCollider* pDest, float fDeltaTime);
 };
 

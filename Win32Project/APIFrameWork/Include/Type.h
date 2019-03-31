@@ -202,3 +202,10 @@ typedef struct _tagSphere {
 		fRadius(0.f) {
 	}
 }SPHERE,*PSPHERE;
+
+typedef struct _tagPixel {
+	unsigned char r;
+	unsigned char g;
+	unsigned char b;
+
+}PIXEL, *PPIXEL;

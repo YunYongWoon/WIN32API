@@ -53,3 +53,16 @@ const wchar_t * CPathManager::FindPath(const string & strKey) {
 
 	return iter->second.c_str();
 }
+
+const char * CPathManager::FindPathMultiByte(const string & strKey) {
+	const wchar_t* pPath = FindPath(strKey);
+
+	if (!pPath)
+		return NULL;
+
+	memset(m_strPath, 0, sizeof(char) * MAX_PATH);
+
+	WideCharToMultiByte(CP_ACP, 0, pPath, -1, m_strPath, lstrlen(pPath), 0, 0);
+
+	return m_strPath;
+}

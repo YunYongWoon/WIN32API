@@ -53,8 +53,11 @@ bool CColliderRect::Collision(CCollider* pDest) {
 		return CollisionRectToRect(m_tWorldInfo, ((CColliderRect*)pDest)->GetWorldInfo());
 	case CT_SPHERE:
 		return CollisionRectToSphere(m_tWorldInfo, ((CColliderSphere*)pDest)->GetWorldInfo());
-	}
-	
+	case CT_PIXEL:
+		return CollisionRectToPixel(GetWorldInfo(),
+			((CColliderPixel*)pDest)->GetPixel(), ((CColliderPixel*)pDest)->GetWidth(),
+			((CColliderPixel*)pDest)->GetHeight());
+	}	
 	return false;
 }
 

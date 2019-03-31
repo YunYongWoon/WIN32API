@@ -61,7 +61,7 @@
     <Filter Include="05. Collider">
       <UniqueIdentifier>{3f92e718-0e74-4473-bce4-e9f66d67417d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="05. Math">
+    <Filter Include="01. Core\05. Math">
       <UniqueIdentifier>{45c0a26c-dbdf-42fa-ab2b-380765724c13}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -139,7 +139,7 @@
       <Filter>05. Collider</Filter>
     </ClCompile>
     <ClCompile Include="Math.cpp">
-      <Filter>05. Math</Filter>
+      <Filter>01. Core\05. Math</Filter>
     </ClCompile>
     <ClCompile Include="Collider\ColliderPixel.cpp">
       <Filter>05. Collider</Filter>
@@ -231,7 +231,7 @@
       <Filter>05. Collider</Filter>
     </ClInclude>
     <ClInclude Include="Math.h">
-      <Filter>05. Math</Filter>
+      <Filter>01. Core\05. Math</Filter>
     </ClInclude>
     <ClInclude Include="Collider\ColliderPixel.h">
       <Filter>05. Collider</Filter>
