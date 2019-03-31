@@ -1,7 +1,7 @@
 #include "ColliderRect.h"
 #include "../Object/Obj.h"
 #include "ColliderSphere.h"
-
+#include "ColliderPixel.h"
 
 CColliderRect::CColliderRect() {
 	m_eCollType = CT_RECT;

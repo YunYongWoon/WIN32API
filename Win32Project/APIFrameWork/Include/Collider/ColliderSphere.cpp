@@ -1,6 +1,7 @@
 #include "ColliderSphere.h"
 #include "../Object/Obj.h" 
 #include "ColliderRect.h"
+#include "ColliderPixel.h"
 
 
 CColliderSphere::CColliderSphere() {
