@@ -21,9 +21,9 @@ bool CPlayer::Init() {
 	SetSpeed(400.f);
 	SetPivot(0.5f, 0.5f);
 
-	SetTexture("player", L"HoTS.bmp");
+	SetTexture("Player", L"HoTS.bmp");
 
-	CColliderRect* pRC = AddCollider<CColliderRect>("PlayerBody");
+	CColliderRect* pRC = AddCollider<CColliderRect>("Player");
 
 	pRC->SetRect(-50.f, -50.f, 50.f, 50.f);
 	pRC->AddCollisionFunction(CS_ENTER, this,
@@ -32,6 +32,9 @@ bool CPlayer::Init() {
 	SAFE_RELEASE(pRC);
 
 	m_iHP = 0;
+
+	// 중력 적용
+	SetPhysics(true);
 
 	return true;
 }
@@ -89,7 +92,7 @@ CPlayer * CPlayer::Clone() {
 void CPlayer::Fire() {
 	CObj* pBullet = CObj::CreateCloneObj("Bullet", "PlayerBullet",m_pLayer);
 
-	pBullet->AddCollisionFunction("BulletBody", CS_ENTER, (CBullet*)pBullet, &CBullet::Hit);
+	pBullet->AddCollisionFunction("Bullet", CS_ENTER, (CBullet*)pBullet, &CBullet::Hit);
 
 	// 오른쪽 가운데를 구한다.
 	POSITION tPos;

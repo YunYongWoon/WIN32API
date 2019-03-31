@@ -8,6 +8,7 @@
 #include <typeinfo>
 #include <string>
 #include <functional>
+#include <conio.h>
 
 #pragma comment(lib,"msimg32")
 
@@ -19,6 +20,7 @@ using namespace std;
 #include "Flag.h"
 
 #define PI 3.141592f
+#define GRAVITY 0.98f
 
 // PATH Key
 #define ROOT_PATH		"RootPath"

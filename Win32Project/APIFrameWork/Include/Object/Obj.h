@@ -44,6 +44,19 @@ public:
 
 protected:
 	int m_iRef;
+	
+protected:
+	bool m_bisPhysics;
+	float m_fGravityTime;
+
+public:
+	void SetPhysics(bool bPhysics) {
+		m_bisPhysics = bPhysics;
+	}
+
+	bool GetPhysics() const {
+		return m_bisPhysics;
+	}
 
 protected:
 	string m_strTag;

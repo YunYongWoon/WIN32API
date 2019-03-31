@@ -14,6 +14,10 @@ bool CCore::m_bLoop = true;
 CCore::CCore() {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	//_CrtSetBreakAlloc();      // 메모리 릭 부분을 바로 찾아줌
+#ifdef _DEBUG
+	// 콘솔창을 생성시켜주는 함수.
+	AllocConsole();
+#endif
 }
 
 
@@ -27,6 +31,11 @@ CCore::~CCore() {
 	DESTROY_SINGLE(CTimer);
 
 	ReleaseDC(m_hWnd, m_hDC);
+
+#ifdef _DEBUG
+	// 콘솔창을 해제시켜주는 함수.
+	FreeConsole();
+#endif
 }
 
 bool CCore::Init(HINSTANCE hInst) {
@@ -43,7 +52,7 @@ bool CCore::Init(HINSTANCE hInst) {
 	m_hDC = GetDC(m_hWnd);
 
 	// 타이머 초기화
-	if (!GET_SINGLE(CTimer)->Init())
+	if (!GET_SINGLE(CTimer)->Init(m_hWnd))
 		return false;
 
 	// 경로관리자 초기화

@@ -84,7 +84,7 @@ void CMinion::CollisionBullet(CCollider * pSrc, CCollider * pDest, float fDeltaT
 void CMinion::Fire() {
 	CObj* pBullet = CObj::CreateCloneObj("Bullet", "MinionBullet", m_pLayer);
 
-	pBullet->AddCollisionFunction("BulletBody", CS_ENTER, (CBullet*)pBullet, &CBullet::Hit);
+	pBullet->AddCollisionFunction("Bullet", CS_ENTER, (CBullet*)pBullet, &CBullet::Hit);
 
 	((CMoveObj*)pBullet)->SetAngle(PI);
 
