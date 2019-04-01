@@ -38,16 +38,20 @@ bool CPlayer::Init() {
 	// 중력 적용
 	SetPhysics(true);
 
+	// 점프할 힘을 적용
+	SetForce(200.f);
+
+
 	return true;
 }
 void CPlayer::Input(float fDeltaTime) {
 	CMoveObj::Input(fDeltaTime);
 
-	if (KEYPRESS("MoveTop")) {
-		MoveYFromSpeed(fDeltaTime, MD_BACK);
+	if (KEYPRESS("MoveUp")) {
+		Jump();
 	}
 	if (KEYPRESS("MoveBottom")) {
-		MoveYFromSpeed(fDeltaTime, MD_FRONT);
+		//MoveYFromSpeed(fDeltaTime, MD_FRONT);
 	}
 	if (KEYPRESS("MoveLeft")) {
 		MoveXFromSpeed(fDeltaTime, MD_BACK);
@@ -112,11 +116,13 @@ void CPlayer::Hit(CCollider * pSrc, CCollider * pDest, float fDeltaTime) {
 
 	else if (pDest->GetTag() == "StageColl") {
 		ClearGravity();
+		JumpEnd();
 	}
 }
 
 void CPlayer::HitStay(CCollider * pSrc, CCollider * pDest, float fDeltaTime) {
 	if (pDest->GetTag() == "StageColl") {
 		ClearGravity();
+		JumpEnd();
 	}
 }

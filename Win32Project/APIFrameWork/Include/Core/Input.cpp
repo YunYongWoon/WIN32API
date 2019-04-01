@@ -12,7 +12,7 @@ CInput::~CInput() {
 
 bool CInput::Init(HWND hWnd) {
 	m_hWnd = hWnd;
-	AddKey('W', "MoveTop");
+	AddKey('W', "MoveUp");
 	AddKey('S', "MoveBottom");
 	AddKey('A', "MoveLeft");
 	AddKey('D', "MoveRight");
