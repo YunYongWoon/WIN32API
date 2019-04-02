@@ -1,4 +1,6 @@
 #pragma once
+#include "flag.h"
+
 typedef struct _tagResolution {
 	unsigned int iW;
 	unsigned int iH;
@@ -209,3 +211,21 @@ typedef struct _tagPixel {
 	unsigned char b;
 
 }PIXEL, *PPIXEL;
+
+typedef struct _tagAnimationClip {
+	ANIMATION_TYPE eType;
+	ANIMATION_OPTION eOption;
+	vector<class CTexture*> vecTexture;
+	float fAnimationTime;
+	float fAnimationLimitTime;
+	int iFrameX;
+	int iFrameY;
+	int iFrameMaxX;
+	int iFrameMaxY;
+	int iStartX;
+	int iStartY;
+	int iLengthX;
+	int iLengthY;
+	float fOptionTime;
+	float fOptionLimitTime;
+}ANIMATIONCLIP, *PANIMATIONCLIP;

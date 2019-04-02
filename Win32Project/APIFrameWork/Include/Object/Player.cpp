@@ -51,7 +51,7 @@ void CPlayer::Input(float fDeltaTime) {
 		Jump();
 	}
 	if (KEYPRESS("MoveBottom")) {
-		//MoveYFromSpeed(fDeltaTime, MD_FRONT);
+		MoveYFromSpeed(fDeltaTime, MD_FRONT);
 	}
 	if (KEYPRESS("MoveLeft")) {
 		MoveXFromSpeed(fDeltaTime, MD_BACK);

@@ -28,3 +28,19 @@ enum COLLISION_STATE {
 	CS_LEAVE,
 	CS_END
 };
+
+// Animation Type
+enum ANIMATION_TYPE {
+	AT_ATLAS,
+	AT_FRAME,
+	AT_END
+};
+
+// Animation Option
+enum ANIMATION_OPTION {
+	AO_LOOP,
+	AO_ONCE_RETURN,
+	AO_ONCE_DESTROY,
+	AO_TIME_RETURN,
+	AO_TIME_DESTROY
+};

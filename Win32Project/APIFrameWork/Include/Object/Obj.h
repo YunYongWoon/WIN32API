@@ -69,8 +69,11 @@ protected:
 	POSITION m_tPivot;
 	class CTexture*  m_pTexture;
 	list<CCollider*> m_ColliderList;
+	class CAnimation* m_pAnimation;
 
 public:
+	class CAnimation* CreatAnimation(const string& strTag);
+
 	const list<CCollider*>* GetColliderList() const {
 		return &m_ColliderList;
 	}
