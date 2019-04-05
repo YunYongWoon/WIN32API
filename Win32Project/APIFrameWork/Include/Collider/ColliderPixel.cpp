@@ -6,7 +6,7 @@
 
 
 CColliderPixel::CColliderPixel() {
-	m_eCollType = CT_RECT;
+	m_eCollType = CT_PIXEL;
 	m_iWidth = 0;
 	m_iHeight = 0;
 }

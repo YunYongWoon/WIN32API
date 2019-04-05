@@ -100,11 +100,29 @@ CAnimation * CObj::CreatAnimation(const string & strTag) {
 	m_pAnimation = new CAnimation;
 
 	m_pAnimation->SetTag(strTag);
+	m_pAnimation->SetObj(this);
+
 	if (!m_pAnimation->Init()) {
 		SAFE_RELEASE(m_pAnimation);
 		return NULL;
 	}
+	m_pAnimation->AddRef();
+
 	return m_pAnimation;
+}
+
+bool CObj::AddAnimationClip(const string & strName, ANIMATION_TYPE eType, ANIMATION_OPTION eOption, 
+	float fAnimationLimitTime, int iFrameMaxX, int iFrameMaxY, int iStartX, int iStartY, 
+	int iLengthX, int iLengthY, float fOptionLimitTime, const string & strTexKey, const wchar_t * pFileName, 
+	const string & strPathKey) {
+	if (!m_pAnimation)
+		return false;
+
+	m_pAnimation->AddClip(strName, eType, eOption, fAnimationLimitTime,
+		iFrameMaxX, iFrameMaxY, iStartX, iStartY, iLengthX, iLengthY,
+		fOptionLimitTime, strTexKey, pFileName, strPathKey);
+
+	return true;
 }
 
 
@@ -187,6 +205,12 @@ void CObj::Render(HDC hDC, float fDeltaTime) {
 	if (m_pTexture) {
 		POSITION tPos = m_tPos - m_tSize * m_tPivot;
 		tPos -= GET_SINGLE(CCamera)->GetPos();
+
+		static int iY = tPos.y;
+
+		if (iY != (int)tPos.y) {
+
+		}
 
 		if (m_pTexture->GetColorKeyEnable()) {
 			TransparentBlt(hDC, tPos.x, tPos.y, m_tSize.x, m_tSize.y, m_pTexture->GetDC(),

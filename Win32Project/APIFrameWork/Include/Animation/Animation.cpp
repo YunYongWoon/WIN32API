@@ -1,6 +1,7 @@
 #include "Animation.h"
 #include "../Resources/Texture.h"
 #include "../Resources/ResourceManager.h"
+#include "../Object/Obj.h"
 
 CAnimation::CAnimation() {
 }
@@ -59,14 +60,58 @@ bool CAnimation::AddClip(const string & strName, ANIMATION_TYPE eType, ANIMATION
 	pClip->vecTexture.push_back(pTex);
 
 	pClip->fAnimationTime = 0.f;
-	pClip->iFrameX = 0;
-	pClip->iFrameY = 0;
+	pClip->iFrameX = iStartX;
+	pClip->iFrameY = iStartY;
 	pClip->fOptionTime = 0.f;
+
+	if (m_mapClip.empty()) {
+		SetDefaultClip(strName);
+		SetCurrentClip(strName);
+	}
 
 	m_mapClip.insert(make_pair(strName, pClip));
 
 	return true;
 
+}
+
+void CAnimation::SetCurrentClip(const string & strCurClip) {
+	ChangeClip(strCurClip);
+}
+
+void CAnimation::SetDefaultClip(const string & strDefaultClip) {
+	m_strDefaultClip = strDefaultClip;
+}
+
+void CAnimation::ChangeClip(const string & strClip) {
+	if (m_strCurClip == strClip)
+		return;
+
+	m_strCurClip = strClip;
+
+	if (m_pCurClip) {
+		m_pCurClip->iFrameX = m_pCurClip->iStartX;
+		m_pCurClip->iFrameY = m_pCurClip->iStartY;
+		m_pCurClip->fAnimationTime = 0.f;
+		m_pCurClip->fOptionTime = 0.f;
+	}
+
+	m_pCurClip = FindClip(strClip);
+
+	if (m_pCurClip->eType == AT_ATLAS)
+		m_pObj->SetTexture(m_pCurClip->vecTexture[0]);
+
+	else if (m_pCurClip->eType == AT_FRAME)
+		m_pObj->SetTexture(m_pCurClip->vecTexture[m_pCurClip->iFrameX]);
+}
+
+PANIMATIONCLIP CAnimation::FindClip(const string & strName) {
+	unordered_map<string, PANIMATIONCLIP>::iterator iter = m_mapClip.find(strName);
+
+	if (iter == m_mapClip.end())
+		return NULL;
+
+	return iter->second;
 }
 
 bool CAnimation::Init() {

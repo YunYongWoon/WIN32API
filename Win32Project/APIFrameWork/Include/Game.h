@@ -20,7 +20,7 @@ using namespace std;
 #include "Flag.h"
 
 #define PI 3.141592f
-#define GRAVITY 0.98f
+#define GRAVITY 4.9f
 
 // PATH Key
 #define ROOT_PATH		"RootPath"

@@ -16,6 +16,16 @@ protected:
 	list<CCollider*>	m_CollisionList;
 	COLLIDER_TYPE		m_eCollType;
 	class CObj*			m_pObj;
+	POSITION			m_tHitPoint;
+
+public:
+	POSITION GetHitPoint() const {
+		return m_tHitPoint;
+	}
+
+	void SetHitPoint(const POSITION& tPos) {
+		m_tHitPoint = tPos;
+	}
 
 public:
 	void AddCollisionFunction(COLLISION_STATE eState, void(*pFunc)(CCollider*, CCollider*, float)) {
