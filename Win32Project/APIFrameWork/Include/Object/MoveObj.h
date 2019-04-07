@@ -7,7 +7,7 @@ protected:
 	CMoveObj(const CMoveObj& obj);
 	virtual ~CMoveObj();
 	
-private:
+protected:
 	float m_fAngle;
 	float m_fSpeed;
 	bool m_bMove;

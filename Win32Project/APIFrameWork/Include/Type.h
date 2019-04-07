@@ -218,6 +218,7 @@ typedef struct _tagAnimationClip {
 	vector<class CTexture*> vecTexture;
 	float fAnimationTime;
 	float fAnimationLimitTime;
+	float fAnimationFrameTime;
 	int iFrameX;
 	int iFrameY;
 	int iFrameMaxX;
@@ -228,4 +229,5 @@ typedef struct _tagAnimationClip {
 	int iLengthY;
 	float fOptionTime;
 	float fOptionLimitTime;
+	_SIZE tFrameSize;
 }ANIMATIONCLIP, *PANIMATIONCLIP;

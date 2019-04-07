@@ -23,6 +23,7 @@ bool CPlayer::Init() {
 	SetPivot(0.5f, 0.5f);
 
 	SetTexture("Player", L"HoTS.bmp");
+	SetColorKey(255, 0, 255);
 
 	CColliderRect* pRC = AddCollider<CColliderRect>("Player");
 
@@ -36,6 +37,8 @@ bool CPlayer::Init() {
 
 	m_iHP = 0;
 
+	m_fTurnSpeed = m_iHP + 1.f;
+
 	// 중력 적용
 	SetPhysics(true);
 
@@ -44,8 +47,9 @@ bool CPlayer::Init() {
 
 	CAnimation* pAni = CreatAnimation("PlayerAnimation");
 
-	AddAnimationClip("Idle", AT_ATLAS, AO_LOOP, 1.f, 4, 1, 0, 0, 4, 1,
+	AddAnimationClip("Idle", AT_ATLAS, AO_LOOP, 0.5f, 4, 1, 0, 0, 4, 1,
 		0.f, "PlayerIdle", L"Idle/HoTSTurn.bmp");
+	SetAnimationClipColorKey("Idle", 255, 0, 255);
 
 	SAFE_RELEASE(pAni);
 
@@ -53,6 +57,7 @@ bool CPlayer::Init() {
 }
 void CPlayer::Input(float fDeltaTime) {
 	CMoveObj::Input(fDeltaTime);
+
 
 	if (KEYPRESS("MoveUp")) {
 		Jump();
@@ -74,6 +79,7 @@ void CPlayer::Input(float fDeltaTime) {
 
 int CPlayer::Update(float fDeltaTime) {
 	CMoveObj::Update(fDeltaTime);
+
 	return 0;
 }
 
@@ -103,6 +109,7 @@ CPlayer * CPlayer::Clone() {
 }
 
 void CPlayer::Fire() {
+	m_bAttack = true;
 	CObj* pBullet = CObj::CreateCloneObj("Bullet", "PlayerBullet",m_pLayer);
 
 	pBullet->AddCollisionFunction("Bullet", CS_ENTER, (CBullet*)pBullet, &CBullet::Hit);

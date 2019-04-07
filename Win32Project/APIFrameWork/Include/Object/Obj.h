@@ -66,6 +66,7 @@ protected:
 	string m_strTag;
 	POSITION m_tPos;
 	_SIZE m_tSize;
+	_SIZE m_tImageOffset;
 	POSITION m_tPivot;
 	class CTexture*  m_pTexture;
 	list<CCollider*> m_ColliderList;
@@ -77,6 +78,8 @@ public:
 		float fAnimationLimitTime, int iFrameMaxX, int iFrameMaxY, int iStartX, int iStartY,
 		int iLengthX, int iLengthY, float fOptionLimitTime, const string& strTexKey, const wchar_t* pFileName,
 		const string& strPathKey = TEXTURE_PATH);
+	void SetAnimationClipColorKey(const string & strClip,
+		unsigned char r, unsigned char g, unsigned char b);
 
 	const list<CCollider*>* GetColliderList() const {
 		return &m_ColliderList;
@@ -190,13 +193,21 @@ public:
 		m_tPivot.y = y;
 	}
 
-	
+	void SetImageOffset(const _SIZE& tOffset) {
+		m_tImageOffset = tOffset;
+	}
+
+	void SetImageOffset(float x, float y) {
+		m_tImageOffset.x = x;
+		m_tImageOffset.y = y;
+	}
 
 public:
 	void SetTexture(class CTexture* pTexture);
 	void SetTexture(const string& strKey,
 		const wchar_t* pFileName = NULL,
 		const string& strPathKey = TEXTURE_PATH);
+	void SetColorKey(unsigned char r, unsigned char g, unsigned char b);
 
 public:
 	virtual bool Init() = 0;

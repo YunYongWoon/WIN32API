@@ -21,12 +21,23 @@ private:
 public:
 	void SetColorKey(unsigned char r, unsigned char g, unsigned char b);
 	void SetColorKey(COLORREF ColorKey);
+
 	COLORREF GetColorKey() const {
 		return m_ColorKey;
 	}
+
 	bool GetColorKeyEnable() const {
 		return m_bColorKeyEnable;
 	}
+
+	long GetWidth() const {
+		return m_tInfo.bmWidth;
+	}
+
+	long GetHeight() const {
+		return m_tInfo.bmHeight;
+	}
+
 
 public:
 	bool LoadTexture(HINSTANCE hInst, HDC hDC, 

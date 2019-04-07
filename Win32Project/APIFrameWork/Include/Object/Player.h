@@ -14,6 +14,8 @@ private:
 
 private:
 	int m_iHP;
+	float m_fTurnSpeed;
+	bool m_bAttack;
 
 public:
 	virtual bool Init();
@@ -26,6 +28,7 @@ public:
 
 private:
 	void Fire();
+	
 
 public:
 	void Hit(class CCollider* pSrc,
