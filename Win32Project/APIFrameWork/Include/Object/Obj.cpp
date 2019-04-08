@@ -124,6 +124,21 @@ bool CObj::AddAnimationClip(const string & strName, ANIMATION_TYPE eType, ANIMAT
 	return true;
 }
 
+bool CObj::AddAnimationClip(const string & strName, ANIMATION_TYPE eType,
+	ANIMATION_OPTION eOption, float fAnimationLimitTime, int iFrameMaxX,
+	int iFrameMaxY, int iStartX, int iStartY, int iLengthX, int iLengthY,
+	float fOptionLimitTime, const string & strTexKey,
+	const vector<wstring>& vecFileName, const string & strPathKey) {
+	if (!m_pAnimation)
+		return false;
+
+	m_pAnimation->AddClip(strName, eType, eOption, fAnimationLimitTime,
+		iFrameMaxX, iFrameMaxY, iStartX, iStartY, iLengthX, iLengthY,
+		fOptionLimitTime, strTexKey, vecFileName, strPathKey);
+
+	return true;
+}
+
 void CObj::SetAnimationClipColorKey(const string & strClip, unsigned char r, unsigned char g, unsigned char b) {
 	if (m_pAnimation)
 		m_pAnimation->SetClipColorKey(strClip, r, g, b);

@@ -21,9 +21,10 @@ bool CPlayer::Init() {
 	SetSize(100.f, 100.f);
 	SetSpeed(400.f);
 	SetPivot(0.5f, 0.5f);
+	SetImageOffset(0.f, 0.f); 
 
-	SetTexture("Player", L"HoTS.bmp");
-	SetColorKey(255, 0, 255);
+	//SetTexture("Player", L"HoTS.bmp");
+	//SetColorKey(255, 0, 255);
 
 	CColliderRect* pRC = AddCollider<CColliderRect>("Player");
 

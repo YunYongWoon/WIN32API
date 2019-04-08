@@ -1,5 +1,6 @@
 #include "SceneManager.h"
 #include "InGameScene.h"
+#include "StartScene.h"
 
 DEFINITION_SINGLE(CSceneManager)
 
@@ -13,7 +14,7 @@ CSceneManager::~CSceneManager() {
 }
 
 bool CSceneManager::Init() {
-	CreateScene<CInGameScene>(SC_CURRENT);
+	CreateScene<CStartScene>(SC_CURRENT);
 	return true;
 }
 

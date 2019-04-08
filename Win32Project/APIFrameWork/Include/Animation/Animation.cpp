@@ -91,6 +91,59 @@ bool CAnimation::AddClip(const string & strName, ANIMATION_TYPE eType, ANIMATION
 
 }
 
+bool CAnimation::AddClip(const string & strName, ANIMATION_TYPE eType,
+	ANIMATION_OPTION eOption, float fAnimationLimitTime, int iFrameMaxX,
+	int iFrameMaxY, int iStartX, int iStartY, int iLengthX, int iLengthY,
+	float fOptionLimitTime, const string & strTexKey,
+	const vector<wstring>& vecFileName, const string & strPathKey) {
+
+	PANIMATIONCLIP pClip = new ANIMATIONCLIP;
+
+	pClip->eType = eType;
+	pClip->eOption = eOption;
+	pClip->fAnimationLimitTime = fAnimationLimitTime;
+	pClip->iFrameMaxX = iFrameMaxX;
+	pClip->iFrameMaxY = iFrameMaxY;
+	pClip->iStartX = iStartX;
+	pClip->iStartY = iStartY;
+	pClip->iLengthX = iLengthX;
+	pClip->iLengthY = iLengthY;
+	pClip->fOptionLimitTime = fOptionLimitTime;
+	pClip->fAnimationFrameTime = fAnimationLimitTime / (iLengthX * iLengthY);
+
+	for (size_t i = 0; i < vecFileName.size(); i++) {
+		char strKey[256] = {};
+		sprintf_s(strKey, "%s%d", strTexKey.c_str(), i + 1);
+		CTexture* pTex = GET_SINGLE(CResourceManager)->LoadTexture(strTexKey,
+			vecFileName[i].c_str(), strPathKey);
+
+		pClip->vecTexture.push_back(pTex);
+	}
+
+
+	pClip->tFrameSize.x = pClip->vecTexture[0]->GetWidth() / iFrameMaxX;
+	pClip->tFrameSize.y = pClip->vecTexture[0]->GetHeight() / iFrameMaxY;
+
+	pClip->fAnimationTime = 0.f;
+	pClip->iFrameX = iStartX;
+	pClip->iFrameY = iStartY;
+	pClip->fOptionTime = 0.f;
+
+
+	m_mapClip.insert(make_pair(strName, pClip));
+
+	if (m_strCurClip.empty()) {
+		SetCurrentClip(strName);
+	}
+
+	if (m_strDefaultClip.empty()) {
+		SetDefaultClip(strName);
+	}
+
+	return true;
+
+}
+
 void CAnimation::SetClipColorKey(const string & strClip, 
 	unsigned char r, unsigned char g, unsigned char b) {
 	PANIMATIONCLIP pClip = FindClip(strClip);
@@ -133,6 +186,10 @@ void CAnimation::ChangeClip(const string & strClip) {
 		m_pObj->SetTexture(m_pCurClip->vecTexture[m_pCurClip->iFrameX]);
 }
 
+void CAnimation::ReturnClip() {
+	ChangeClip(m_strDefaultClip);
+}
+
 PANIMATIONCLIP CAnimation::FindClip(const string & strName) {
 	unordered_map<string, PANIMATIONCLIP>::iterator iter = m_mapClip.find(strName);
 
@@ -155,6 +212,9 @@ void CAnimation::Update(float fTime) {
 		m_pCurClip->fAnimationTime -= m_pCurClip->fAnimationFrameTime;
 
 		++m_pCurClip->iFrameX;
+
+		if (m_pCurClip->eType == AT_FRAME)
+			m_pObj->SetTexture(m_pCurClip->vecTexture[m_pCurClip->iFrameX]);
 
 		if (m_pCurClip->iFrameX - m_pCurClip->iStartX == m_pCurClip->iLengthX) {
 			m_pCurClip->iFrameX = m_pCurClip->iStartX;

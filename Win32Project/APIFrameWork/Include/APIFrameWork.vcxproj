@@ -169,6 +169,8 @@
     <ClCompile Include="Object\Player.cpp" />
     <ClCompile Include="Object\Stage.cpp" />
     <ClCompile Include="Object\StaticObj.cpp" />
+    <ClCompile Include="Object\UI.cpp" />
+    <ClCompile Include="Object\UIPanel.cpp" />
     <ClCompile Include="Ref.cpp" />
     <ClCompile Include="Resources\ResourceManager.cpp" />
     <ClCompile Include="Resources\Texture.cpp" />
@@ -176,6 +178,7 @@
     <ClCompile Include="Scene\Layer.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\SceneManager.cpp" />
+    <ClCompile Include="Scene\StartScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation\Animation.h" />
@@ -200,6 +203,8 @@
     <ClInclude Include="Object\Player.h" />
     <ClInclude Include="Object\Stage.h" />
     <ClInclude Include="Object\StaticObj.h" />
+    <ClInclude Include="Object\UI.h" />
+    <ClInclude Include="Object\UIPanel.h" />
     <ClInclude Include="Ref.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Resources\ResourceManager.h" />
@@ -208,6 +213,7 @@
     <ClInclude Include="Scene\Layer.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\SceneManager.h" />
+    <ClInclude Include="Scene\StartScene.h" />
     <ClInclude Include="Type.h" />
   </ItemGroup>
   <ItemGroup>
