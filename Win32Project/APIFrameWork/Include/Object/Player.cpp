@@ -46,7 +46,7 @@ bool CPlayer::Init() {
 	// 점프할 힘을 적용
 	SetForce(200.f);
 
-	CAnimation* pAni = CreatAnimation("PlayerAnimation");
+	CAnimation* pAni = CreateAnimation("PlayerAnimation");
 
 	AddAnimationClip("Idle", AT_ATLAS, AO_LOOP, 0.5f, 4, 1, 0, 0, 4, 1,
 		0.f, "PlayerIdle", L"Idle/HoTSTurn.bmp");

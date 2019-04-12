@@ -162,6 +162,12 @@
     <ClCompile Include="Scene\StartScene.cpp">
       <Filter>02. Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Object\UIButton.cpp">
+      <Filter>03. Object\01. MoveObj\04. UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Mouse.cpp">
+      <Filter>03. Object\01. MoveObj\04. UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -265,6 +271,12 @@
     </ClInclude>
     <ClInclude Include="Scene\StartScene.h">
       <Filter>02. Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\UIButton.h">
+      <Filter>03. Object\01. MoveObj\04. UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Mouse.h">
+      <Filter>03. Object\01. MoveObj\04. UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

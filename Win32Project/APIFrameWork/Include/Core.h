@@ -16,6 +16,10 @@ public:
 	RESOLUTION GetResolution() const {
 		return m_tRS;
 	}
+
+	HWND GetWindowHandle() const{
+		return m_hWnd;
+	}
 	
 
 public:

@@ -7,6 +7,7 @@
 #include "Core\Camera.h"
 #include "Core\Input.h"
 #include "Collider\CollisionManager.h"
+#include "Object\Mouse.h"
 
 CCore* CCore::m_pInst = NULL;
 bool CCore::m_bLoop = true;
@@ -137,15 +138,19 @@ void CCore::Collision(float fDeltaTime) {
 }
 
 void CCore::Render(float fDeltaTime) {
-	// 더블버퍼링
+	// 더블 버퍼링
 	CTexture* pBackBuffer = GET_SINGLE(CResourceManager)->GetBackBuffer();
 
-	Rectangle(pBackBuffer->GetDC(), 0, 0, 1280, 720);
 	GET_SINGLE(CSceneManager)->Render(pBackBuffer->GetDC(), fDeltaTime);
+
+	// 마지막에 마우스를 그린다.
+	CMouse* pMouse = GET_SINGLE(CInput)->GetMouse();
+
+	pMouse->Render(pBackBuffer->GetDC(), fDeltaTime);
 
 	BitBlt(m_hDC, 0, 0, m_tRS.iW, m_tRS.iH, pBackBuffer->GetDC(), 0, 0, SRCCOPY);
 
-	SAFE_RELEASE(pBackBuffer)
+	SAFE_RELEASE(pBackBuffer);
 }
 
 ATOM CCore::MyRegisterClass() {

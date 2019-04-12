@@ -23,6 +23,15 @@ private:
 	unordered_map<string, PKEYINFO> m_mapKey;
 	PKEYINFO m_pCreateKey;
 
+	POINT m_tMousePos;
+	POINT m_tMouseMove;
+	class CMouse* m_pMouse;
+
+public:
+	class CMouse* GetMouse() const {
+		return m_pMouse;
+	}
+
 public:
 	template<typename T>
 	bool AddKey(const T& data) {

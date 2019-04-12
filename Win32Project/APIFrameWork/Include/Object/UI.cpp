@@ -14,17 +14,21 @@ CUI::~CUI() {
 }
 
 void CUI::Input(float fDeltaTime) {
+	CObj::Input(fDeltaTime);
 }
 
 int CUI::Update(float fDeltaTime) {
+	CObj::Update(fDeltaTime);
 	return 0;
 }
 
 int CUI::LateUpdate(float fDeltaTime) {
+	CObj::LateUpdate(fDeltaTime);
 	return 0;
 }
 
 void CUI::Collision(float fDeltaTime) {
+	CObj::Collision(fDeltaTime);
 }
 
 void CUI::Render(HDC hDC, float fDeltaTime) {
@@ -39,7 +43,7 @@ void CUI::Render(HDC hDC, float fDeltaTime) {
 		}
 
 		tImagePos += m_tImageOffset;
-
+		
 		if (m_pTexture->GetColorKeyEnable()) {
 			TransparentBlt(hDC, m_tPos.x, m_tPos.y, m_tSize.x, m_tSize.y, m_pTexture->GetDC(),
 				tImagePos.x, tImagePos.y, m_tSize.x, m_tSize.y, m_pTexture->GetColorKey());

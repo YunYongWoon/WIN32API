@@ -93,7 +93,7 @@ void CObj::EraseObj() {
 	Safe_Release_VecList(m_ObjList);
 }
 
-CAnimation * CObj::CreatAnimation(const string & strTag) {
+CAnimation * CObj::CreateAnimation(const string & strTag) {
 	SAFE_RELEASE(m_pAnimation);
 
 	m_pAnimation = new CAnimation;
@@ -110,10 +110,11 @@ CAnimation * CObj::CreatAnimation(const string & strTag) {
 	return m_pAnimation;
 }
 
-bool CObj::AddAnimationClip(const string & strName, ANIMATION_TYPE eType, ANIMATION_OPTION eOption, 
-	float fAnimationLimitTime, int iFrameMaxX, int iFrameMaxY, int iStartX, int iStartY, 
-	int iLengthX, int iLengthY, float fOptionLimitTime, const string & strTexKey, const wchar_t * pFileName, 
-	const string & strPathKey) {
+bool CObj::AddAnimationClip(const string & strName, ANIMATION_TYPE eType,
+	ANIMATION_OPTION eOption, float fAnimationLimitTime, int iFrameMaxX,
+	int iFrameMaxY, int iStartX, int iStartY, int iLengthX, int iLengthY,
+	float fOptionLimitTime, const string & strTexKey,
+	const wchar_t * pFileName, const string & strPathKey) {
 	if (!m_pAnimation)
 		return false;
 
@@ -124,11 +125,12 @@ bool CObj::AddAnimationClip(const string & strName, ANIMATION_TYPE eType, ANIMAT
 	return true;
 }
 
-bool CObj::AddAnimationClip(const string & strName, ANIMATION_TYPE eType,
-	ANIMATION_OPTION eOption, float fAnimationLimitTime, int iFrameMaxX,
-	int iFrameMaxY, int iStartX, int iStartY, int iLengthX, int iLengthY,
-	float fOptionLimitTime, const string & strTexKey,
-	const vector<wstring>& vecFileName, const string & strPathKey) {
+bool CObj::AddAnimationClip(const string& strName, ANIMATION_TYPE eType,
+	ANIMATION_OPTION eOption, float fAnimationLimitTime,
+	int iFrameMaxX, int iFrameMaxY, int iStartX, int iStartY,
+	int iLengthX, int iLengthY, float fOptionLimitTime,
+	const string& strTexKey, const vector<wstring>& vecFileName,
+	const string& strPathKey) {
 	if (!m_pAnimation)
 		return false;
 
@@ -142,6 +144,19 @@ bool CObj::AddAnimationClip(const string & strName, ANIMATION_TYPE eType,
 void CObj::SetAnimationClipColorKey(const string & strClip, unsigned char r, unsigned char g, unsigned char b) {
 	if (m_pAnimation)
 		m_pAnimation->SetClipColorKey(strClip, r, g, b);
+}
+
+CCollider * CObj::GetCollider(const string & strTag) {
+	list<CCollider*>::iterator iter;
+	list<CCollider*>::iterator iterEnd = m_ColliderList.end();
+
+	for (iter = m_ColliderList.begin(); iter != iterEnd; iter++) {
+		if ((*iter)->GetTag() == strTag) {
+			(*iter)->AddRef();
+			return *iter;
+		}
+	}
+	return NULL;
 }
 
 
@@ -238,8 +253,10 @@ void CObj::Render(HDC hDC, float fDeltaTime) {
 		if (m_pAnimation) {
 			PANIMATIONCLIP pClip = m_pAnimation->GetCurrentClip();
 
-			tImagePos.x = pClip->iFrameX * pClip->tFrameSize.x;
-			tImagePos.y = pClip->iFrameY * pClip->tFrameSize.y;
+			if (pClip->eType == AT_ATLAS) {
+				tImagePos.x = pClip->iFrameX * pClip->tFrameSize.x;
+				tImagePos.y = pClip->iFrameY * pClip->tFrameSize.y;
+			}
 		}
 
 		tImagePos += m_tImageOffset;

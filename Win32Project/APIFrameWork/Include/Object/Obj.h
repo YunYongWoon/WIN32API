@@ -65,26 +65,30 @@ public:
 protected:
 	string m_strTag;
 	POSITION m_tPos;
+	POSITION m_tPivot;
 	_SIZE m_tSize;
 	_SIZE m_tImageOffset;
-	POSITION m_tPivot;
 	class CTexture*  m_pTexture;
 	list<CCollider*> m_ColliderList;
 	class CAnimation* m_pAnimation;
 
 public:
-	class CAnimation* CreatAnimation(const string& strTag);
+	class CAnimation* CreateAnimation(const string& strTag);
 
-	bool AddAnimationClip(const string& strName, ANIMATION_TYPE eType, ANIMATION_OPTION eOption,
-		float fAnimationLimitTime, int iFrameMaxX, int iFrameMaxY, int iStartX, int iStartY,
-		int iLengthX, int iLengthY, float fOptionLimitTime, const string& strTexKey, const wchar_t* pFileName,
+	// Atlas 형식으로 추가
+	bool AddAnimationClip(const string& strName, ANIMATION_TYPE eType,
+		ANIMATION_OPTION eOption, float fAnimationLimitTime,
+		int iFrameMaxX, int iFrameMaxY, int iStartX, int iStartY,
+		int iLengthX, int iLengthY, float fOptionLimitTime,
+		const string& strTexKey, const wchar_t* pFileName,
 		const string& strPathKey = TEXTURE_PATH);
-
-	bool CObj::AddAnimationClip(const string & strName, ANIMATION_TYPE eType,
-		ANIMATION_OPTION eOption, float fAnimationLimitTime, int iFrameMaxX,
-		int iFrameMaxY, int iStartX, int iStartY, int iLengthX, int iLengthY,
-		float fOptionLimitTime, const string & strTexKey,
-		const vector<wstring>& vecFileName, const string & strPathKey);
+	// Frame 형식으로 추가
+	bool AddAnimationClip(const string& strName, ANIMATION_TYPE eType,
+		ANIMATION_OPTION eOption, float fAnimationLimitTime,
+		int iFrameMaxX, int iFrameMaxY, int iStartX, int iStartY,
+		int iLengthX, int iLengthY, float fOptionLimitTime,
+		const string& strTexKey, const vector<wstring>& vecFileName,
+		const string& strPathKey = TEXTURE_PATH);
 
 	void SetAnimationClipColorKey(const string & strClip,
 		unsigned char r, unsigned char g, unsigned char b);
@@ -92,6 +96,8 @@ public:
 	const list<CCollider*>* GetColliderList() const {
 		return &m_ColliderList;
 	}
+
+	CCollider* GetCollider(const string& strTag);
 
 	template <typename T>
 	void AddCollisionFunction(const string& strTag,
