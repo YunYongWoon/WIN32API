@@ -60,12 +60,12 @@ bool CCore::Init(HINSTANCE hInst) {
 	if (!GET_SINGLE(CPathManager)->Init())
 		return false;
 
-	// 입력관리자 초기화
-	if (!GET_SINGLE(CInput)->Init(m_hWnd))
-		return false;
-
 	// 리소스관리자 초기화
 	if (!GET_SINGLE(CResourceManager)->Init(hInst, m_hDC))
+		return false;
+
+	// 입력관리자 초기화
+	if (!GET_SINGLE(CInput)->Init(m_hWnd))
 		return false;
 
 	// 카메라관리자 초기화

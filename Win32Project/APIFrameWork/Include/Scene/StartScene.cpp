@@ -6,6 +6,7 @@
 #include "../Collider/ColliderPixel.h"
 #include "../Collider/ColliderRect.h"
 #include "../Core.h"
+#include "SceneManager.h"
 
 CStartScene::CStartScene() {
 

@@ -14,7 +14,6 @@ CResourceManager::~CResourceManager() {
 
 CTexture * CResourceManager::GetBackBuffer() const {
 	m_pBackBuffer->AddRef();
-
 	return m_pBackBuffer;
 }
 

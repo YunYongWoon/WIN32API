@@ -82,6 +82,7 @@ public:
 		int iLengthX, int iLengthY, float fOptionLimitTime,
 		const string& strTexKey, const wchar_t* pFileName,
 		const string& strPathKey = TEXTURE_PATH);
+
 	// Frame 형식으로 추가
 	bool AddAnimationClip(const string& strName, ANIMATION_TYPE eType,
 		ANIMATION_OPTION eOption, float fAnimationLimitTime,

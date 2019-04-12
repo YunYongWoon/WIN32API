@@ -172,7 +172,7 @@ bool CAnimation::AddClip(const string & strName, ANIMATION_TYPE eType,
 	for (size_t i = 0; i < vecFileName.size(); ++i) {
 		char strKey[256] = {};
 		sprintf_s(strKey, "%s%d", strTexKey.c_str(), i + 1);
-		CTexture* pTex = GET_SINGLE(CResourceManager)->LoadTexture(strKey,
+		CTexture* pTex = GET_SINGLE(CResourceManager)->LoadTexture(strTexKey,
 			vecFileName[i].c_str(), strPathKey);
 
 		pClip->vecTexture.push_back(pTex);

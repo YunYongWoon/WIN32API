@@ -32,7 +32,7 @@ bool CInput::Init(HWND hWnd) {
 	// 마우스 생성
 	m_pMouse = CObj::CreateObj<CMouse>("Mouse");
 
-	m_pMouse->SetSize(32, 31);
+	m_pMouse->SetSize(32.f, 31.f);
 
 	CAnimation* pAni = m_pMouse->CreateAnimation("PlayerAnimation");
 
