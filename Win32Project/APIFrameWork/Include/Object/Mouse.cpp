@@ -19,6 +19,8 @@ bool CMouse::Init() {
 	GetCursorPos(&pt);
 	ScreenToClient(WINDOWHANDLE, &pt);
 
+	ShowCursor(false);
+
 	m_tPos = pt;
 
 	return true;

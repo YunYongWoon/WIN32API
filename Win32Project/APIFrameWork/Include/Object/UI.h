@@ -6,7 +6,7 @@ class CUI :
 protected:
 	CUI();
 	CUI(const CUI& ui);
-	virtual ~CUI();
+	virtual ~CUI() = 0;
 
 public:
 	virtual bool Init() = 0;

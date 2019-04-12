@@ -38,18 +38,23 @@ void CUI::Render(HDC hDC, float fDeltaTime) {
 		if (m_pAnimation) {
 			PANIMATIONCLIP pClip = m_pAnimation->GetCurrentClip();
 
-			tImagePos.x = pClip->iFrameX * pClip->tFrameSize.x;
-			tImagePos.y = pClip->iFrameY * pClip->tFrameSize.y;
+			if (pClip->eType == AT_ATLAS) {
+				tImagePos.x = pClip->iFrameX * pClip->tFrameSize.x;
+				tImagePos.y = pClip->iFrameY * pClip->tFrameSize.y;
+			}
 		}
 
 		tImagePos += m_tImageOffset;
-		
+
 		if (m_pTexture->GetColorKeyEnable()) {
-			TransparentBlt(hDC, m_tPos.x, m_tPos.y, m_tSize.x, m_tSize.y, m_pTexture->GetDC(),
-				tImagePos.x, tImagePos.y, m_tSize.x, m_tSize.y, m_pTexture->GetColorKey());
+			TransparentBlt(hDC, m_tPos.x, m_tPos.y, m_tSize.x,
+				m_tSize.y, m_pTexture->GetDC(), tImagePos.x, tImagePos.y,
+				m_tSize.x, m_tSize.y, m_pTexture->GetColorKey());
 		}
 		else {
-			BitBlt(hDC, m_tPos.x, m_tPos.y, m_tSize.x, m_tSize.y, m_pTexture->GetDC(), 0, 0, SRCCOPY);
+			BitBlt(hDC, m_tPos.x, m_tPos.y,
+				m_tSize.x, m_tSize.y,
+				m_pTexture->GetDC(), tImagePos.x, tImagePos.y, SRCCOPY);
 		}
 	}
 
