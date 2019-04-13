@@ -2,6 +2,7 @@
 #include "../Object/Obj.h"
 #include "ColliderSphere.h"
 #include "ColliderPixel.h"
+#include "ColliderPoint.h"
 
 CColliderRect::CColliderRect() {
 	m_eCollType = CT_RECT;
@@ -57,6 +58,8 @@ bool CColliderRect::Collision(CCollider* pDest) {
 		return CollisionRectToPixel(GetWorldInfo(),
 			((CColliderPixel*)pDest)->GetPixel(), ((CColliderPixel*)pDest)->GetWidth(),
 			((CColliderPixel*)pDest)->GetHeight());
+	case CT_POINT:
+		return CollisionRectToPoint(m_tWorldInfo, ((CColliderPoint*)pDest)->GetPoint());
 	}	
 	return false;
 }

@@ -21,6 +21,9 @@ public:
 		return m_hWnd;
 	}
 	
+	void DestroyGame() {
+		DestroyWindow(m_hWnd);
+	}
 
 public:
 	bool Init(HINSTANCE hInst);

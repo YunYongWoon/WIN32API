@@ -30,6 +30,7 @@ bool CStartScene::Init() {
 
 	SAFE_RELEASE(pBackPanel);
 
+	// 시작버튼 구현
 	CUIButton* pStartButton = CObj::CreateObj<CUIButton>("StartButton", pLayer);
 
 	pStartButton->SetPos(GETRESOLUTION.iW / 2 - 250, GETRESOLUTION.iH / 2 + 150);
@@ -39,11 +40,20 @@ bool CStartScene::Init() {
 	CColliderRect* pRC = (CColliderRect*)pStartButton->GetCollider("ButtonBody");
 
 	POSITION tPos = pStartButton->GetPos();
-	pRC->SetRect(tPos.x, tPos.y, tPos.x + 200, tPos.y + 100);
+	pRC->SetRect(0.f, 0.f, 200, 100);
+
+	// 충돌판정
+	pRC->AddCollisionFunction(CS_ENTER, pStartButton, &CUIButton::MouseOn);
+
+	pRC->AddCollisionFunction(CS_LEAVE, pStartButton, &CUIButton::MouseOut);
 
 	SAFE_RELEASE(pRC);
+
+	pStartButton->SetCallback(this, &CStartScene::StartButtonCallback);
+
 	SAFE_RELEASE(pStartButton);
 
+	// 종료버튼 구현
 	CUIButton* pEndButton = CObj::CreateObj<CUIButton>("EndButton", pLayer);
 
 	pEndButton->SetPos(GETRESOLUTION.iW / 2 + 20 , GETRESOLUTION.iH / 2 + 150);
@@ -53,9 +63,24 @@ bool CStartScene::Init() {
 	pRC = (CColliderRect*)pEndButton->GetCollider("ButtonBody");
 
 	tPos = pEndButton->GetPos();
-	pRC->SetRect(tPos.x, tPos.y, tPos.x + 200, tPos.y + 100);
+	pRC->SetRect(0.f, 0.f, 200, 100);
+
+	// 충돌판정
+	pRC->AddCollisionFunction(CS_ENTER, pEndButton, &CUIButton::MouseOn);
+
+	pRC->AddCollisionFunction(CS_LEAVE, pEndButton, &CUIButton::MouseOut);
 
 	SAFE_RELEASE(pRC);
+
+	pEndButton->SetCallback(this, &CStartScene::EndButtonCallback);
+
 	SAFE_RELEASE(pEndButton);
 	return true;
+}
+
+void CStartScene::StartButtonCallback(float fTime) {
+}
+
+void CStartScene::EndButtonCallback(float fTime) {
+	GET_SINGLE(CCore)->DestroyGame();
 }

@@ -3,7 +3,7 @@
 #include "../Object/Obj.h" 
 #include "ColliderRect.h"
 #include "../Core/PathManager.h"
-
+#include "ColliderPoint.h"
 
 CColliderPixel::CColliderPixel() {
 	m_eCollType = CT_PIXEL;
@@ -87,6 +87,9 @@ bool CColliderPixel::Collision(CCollider * pDest) {
 	case CT_RECT:
 		return CollisionRectToPixel(((CColliderRect*)pDest)->GetWorldInfo(),
 			m_vecPixel, m_iWidth, m_iHeight);
+	case CT_POINT:
+		return CollisionPixelToPoint(m_vecPixel, m_iWidth, m_iHeight,
+			((CColliderPoint*)pDest)->GetPoint());
 	}
 	return false;
 }

@@ -3,10 +3,12 @@
 #include "../Core/Input.h"
 
 
-CUIButton::CUIButton() {
+CUIButton::CUIButton() :
+	m_bEnableCallback(false) {
 }
 
 CUIButton::CUIButton(const CUIButton & ui) : CUI(ui) {
+	m_bEnableCallback = false;
 }
 
 
@@ -15,7 +17,6 @@ CUIButton::~CUIButton() {
 
 bool CUIButton::Init() {
 	CColliderRect* pColl = AddCollider<CColliderRect>("ButtonBody");
-
 
 	SAFE_RELEASE(pColl);
 	return true;
@@ -45,4 +46,10 @@ void CUIButton::Render(HDC hDC, float fDeltaTime) {
 
 CUIButton * CUIButton::Clone() {
 	return new CUIButton(*this);
+}
+
+void CUIButton::MouseOn(CCollider * pSrc, CCollider * pDest, float fDeltaTime) {
+}
+
+void CUIButton::MouseOut(CCollider * pSrc, CCollider * pDest, float fDeltaTime) {
 }
