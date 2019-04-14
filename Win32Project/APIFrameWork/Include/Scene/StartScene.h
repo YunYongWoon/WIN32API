@@ -15,6 +15,7 @@ public:
 
 public:
 	void StartButtonCallback(float fTime);
+	void EditerButtonCallback(float fTime);
 	void EndButtonCallback(float fTime);
 };
 

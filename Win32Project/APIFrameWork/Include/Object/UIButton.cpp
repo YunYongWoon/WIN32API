@@ -10,6 +10,7 @@ CUIButton::CUIButton() :
 CUIButton::CUIButton(const CUIButton & ui) : CUI(ui) {
 	m_bEnableCallback = false;
 	m_eState = BS_NONE;
+
 }
 
 
@@ -18,6 +19,9 @@ CUIButton::~CUIButton() {
 
 bool CUIButton::Init() {
 	CColliderRect* pColl = AddCollider<CColliderRect>("ButtonBody");
+
+	pColl->AddCollisionFunction(CS_ENTER, this, &CUIButton::MouseOn);
+	pColl->AddCollisionFunction(CS_LEAVE, this, &CUIButton::MouseOut);
 
 	SAFE_RELEASE(pColl);
 	return true;

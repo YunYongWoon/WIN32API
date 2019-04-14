@@ -171,6 +171,12 @@
     <ClCompile Include="Collider\ColliderPoint.cpp">
       <Filter>05. Collider</Filter>
     </ClCompile>
+    <ClCompile Include="Scene\MapEditScene.cpp">
+      <Filter>02. Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Tile.cpp">
+      <Filter>03. Object\02. StaticObj\01. Stage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -283,6 +289,12 @@
     </ClInclude>
     <ClInclude Include="Collider\ColliderPoint.h">
       <Filter>05. Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\MapEditScene.h">
+      <Filter>02. Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Tile.h">
+      <Filter>03. Object\02. StaticObj\01. Stage</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

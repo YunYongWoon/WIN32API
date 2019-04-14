@@ -15,6 +15,10 @@ public:
 		return m_tPos;
 	}
 
+	RESOLUTION GetClientRS() const {
+		return m_tClientRS;
+	}
+
 public:
 	void SetTarget(class CObj* pObj);
 

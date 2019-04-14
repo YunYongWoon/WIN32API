@@ -8,6 +8,7 @@
 #include "../Core.h"
 #include "SceneManager.h"
 #include "InGameScene.h"
+#include "MapEditScene.h"
 
 CStartScene::CStartScene() {
 
@@ -43,16 +44,28 @@ bool CStartScene::Init() {
 	POSITION tPos = pStartButton->GetPos();
 	pRC->SetRect(0.f, 0.f, 200, 100);
 
-	// 충돌판정
-	pRC->AddCollisionFunction(CS_ENTER, pStartButton, &CUIButton::MouseOn);
-
-	pRC->AddCollisionFunction(CS_LEAVE, pStartButton, &CUIButton::MouseOut);
-
 	SAFE_RELEASE(pRC);
 
 	pStartButton->SetCallback(this, &CStartScene::StartButtonCallback);
 
 	SAFE_RELEASE(pStartButton);
+
+	// 에디터버튼 구현
+	CUIButton* pEditerButton = CObj::CreateObj<CUIButton>("EditerButton", pLayer);
+
+	pEditerButton->SetPos(GETRESOLUTION.iW / 2 - 100, GETRESOLUTION.iH / 2);
+	pEditerButton->SetSize(200, 100);
+	pEditerButton->SetTexture("EditerButton", L"EditerButton.bmp");
+
+	pRC = (CColliderRect*)pEditerButton->GetCollider("ButtonBody");
+	
+	pRC->SetRect(0.f, 0.f, 200, 100);
+
+	SAFE_RELEASE(pRC);
+
+	pEditerButton->SetCallback(this, &CStartScene::EditerButtonCallback);
+
+	SAFE_RELEASE(pEditerButton);
 
 	// 종료버튼 구현
 	CUIButton* pEndButton = CObj::CreateObj<CUIButton>("EndButton", pLayer);
@@ -63,13 +76,7 @@ bool CStartScene::Init() {
 
 	pRC = (CColliderRect*)pEndButton->GetCollider("ButtonBody");
 
-	tPos = pEndButton->GetPos();
 	pRC->SetRect(0.f, 0.f, 200, 100);
-
-	// 충돌판정
-	pRC->AddCollisionFunction(CS_ENTER, pEndButton, &CUIButton::MouseOn);
-
-	pRC->AddCollisionFunction(CS_LEAVE, pEndButton, &CUIButton::MouseOut);
 
 	SAFE_RELEASE(pRC);
 
@@ -81,6 +88,10 @@ bool CStartScene::Init() {
 
 void CStartScene::StartButtonCallback(float fTime) {
 	GET_SINGLE(CSceneManager)->CreateScene<CInGameScene>(SC_NEXT);
+}
+
+void CStartScene::EditerButtonCallback(float fTime) {
+	GET_SINGLE(CSceneManager)->CreateScene<CMapEditScene>(SC_NEXT);
 }
 
 void CStartScene::EndButtonCallback(float fTime) {

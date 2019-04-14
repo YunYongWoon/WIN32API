@@ -171,6 +171,7 @@
     <ClCompile Include="Object\Player.cpp" />
     <ClCompile Include="Object\Stage.cpp" />
     <ClCompile Include="Object\StaticObj.cpp" />
+    <ClCompile Include="Object\Tile.cpp" />
     <ClCompile Include="Object\UI.cpp" />
     <ClCompile Include="Object\UIButton.cpp" />
     <ClCompile Include="Object\UIPanel.cpp" />
@@ -179,6 +180,7 @@
     <ClCompile Include="Resources\Texture.cpp" />
     <ClCompile Include="Scene\InGameScene.cpp" />
     <ClCompile Include="Scene\Layer.cpp" />
+    <ClCompile Include="Scene\MapEditScene.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\SceneManager.cpp" />
     <ClCompile Include="Scene\StartScene.cpp" />
@@ -208,6 +210,7 @@
     <ClInclude Include="Object\Player.h" />
     <ClInclude Include="Object\Stage.h" />
     <ClInclude Include="Object\StaticObj.h" />
+    <ClInclude Include="Object\Tile.h" />
     <ClInclude Include="Object\UI.h" />
     <ClInclude Include="Object\UIButton.h" />
     <ClInclude Include="Object\UIPanel.h" />
@@ -217,6 +220,7 @@
     <ClInclude Include="Resources\Texture.h" />
     <ClInclude Include="Scene\InGameScene.h" />
     <ClInclude Include="Scene\Layer.h" />
+    <ClInclude Include="Scene\MapEditScene.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\SceneManager.h" />
     <ClInclude Include="Scene\StartScene.h" />
