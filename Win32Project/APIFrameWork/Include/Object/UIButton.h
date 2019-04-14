@@ -1,5 +1,11 @@
 #pragma once
 #include "UI.h"
+enum BUTTON_STATE {
+	BS_NONE,
+	BS_MOUSEON,
+	BS_CLICK
+};
+
 class CUIButton :
 	public CUI
 {
@@ -15,6 +21,7 @@ private:
 private:
 	function<void(float fTime)> m_ButtonCallback;
 	bool m_bEnableCallback;
+	BUTTON_STATE m_eState;
 
 public:
 	template <typename T>

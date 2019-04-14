@@ -155,6 +155,9 @@ bool CCollider::CollisionSphereToPoint(const SPHERE & src, const POSITION & dest
 
 bool CCollider::CollisionPixelToPoint(const vector<PIXEL> vecPixel, int iWidth, int iHeight, 
 	const POSITION & dest) {
+	if (dest.y < 0 || dest.x < 0 || dest.y >= iWidth || dest.x >= iHeight)
+		return false;
+
 	int idx = (int)dest.y * iWidth + (int)dest.x;
 	const PIXEL&  pixel = vecPixel[idx];
 	if (pixel.r == 255 && pixel.g == 0 & pixel.b == 255) {

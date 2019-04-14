@@ -2,7 +2,7 @@
 #include "../Core.h"
 #include "../Collider/ColliderRect.h"
 #include "Bullet.h"
-
+#include "../Scene/Scene.h"
 
 CMinion::CMinion() : m_fFireTime(0.f), m_fFireTimeLimit(1.1f){
 }
@@ -82,7 +82,8 @@ void CMinion::CollisionBullet(CCollider * pSrc, CCollider * pDest, float fDeltaT
 }
 
 void CMinion::Fire() {
-	CObj* pBullet = CObj::CreateCloneObj("Bullet", "MinionBullet", m_pLayer);
+	CObj* pBullet = CObj::CreateCloneObj("Bullet", "MinionBullet",
+		m_pScene->GetSceneType(), m_pLayer);
 
 	pBullet->AddCollisionFunction("Bullet", CS_ENTER, (CBullet*)pBullet, &CBullet::Hit);
 

@@ -7,6 +7,7 @@
 #include "../Collider/ColliderRect.h"
 #include "../Core.h"
 #include "SceneManager.h"
+#include "InGameScene.h"
 
 CStartScene::CStartScene() {
 
@@ -79,6 +80,7 @@ bool CStartScene::Init() {
 }
 
 void CStartScene::StartButtonCallback(float fTime) {
+	GET_SINGLE(CSceneManager)->CreateScene<CInGameScene>(SC_NEXT);
 }
 
 void CStartScene::EndButtonCallback(float fTime) {

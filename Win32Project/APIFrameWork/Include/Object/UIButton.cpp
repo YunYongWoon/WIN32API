@@ -4,11 +4,12 @@
 
 
 CUIButton::CUIButton() :
-	m_bEnableCallback(false) {
+	m_bEnableCallback(false), m_eState(BS_NONE) {
 }
 
 CUIButton::CUIButton(const CUIButton & ui) : CUI(ui) {
 	m_bEnableCallback = false;
+	m_eState = BS_NONE;
 }
 
 
@@ -33,6 +34,21 @@ int CUIButton::Update(float fDeltaTime) {
 
 int CUIButton::LateUpdate(float fDeltaTime) {
 	CUI::LateUpdate(fDeltaTime);
+
+	if (m_eState != BS_NONE) {
+		if (KEYPRESS("MouseLButton")) {
+			m_eState = BS_CLICK;
+			SetImageOffset(m_tSize.x * 2.f, 0.f);
+		}
+	}
+
+	if (m_eState == BS_CLICK && KEYUP("MouseLButton")) {
+		m_eState = BS_MOUSEON;
+		SetImageOffset(m_tSize.x, 0.f);
+		if (m_bEnableCallback)
+			m_ButtonCallback(fDeltaTime);
+	}
+
 	return 0;
 }
 
@@ -49,7 +65,15 @@ CUIButton * CUIButton::Clone() {
 }
 
 void CUIButton::MouseOn(CCollider * pSrc, CCollider * pDest, float fDeltaTime) {
+	if (pDest->GetTag() == "Mouse") {
+		m_eState = BS_MOUSEON;
+		SetImageOffset(m_tSize.x, 0.f);
+	}
 }
 
 void CUIButton::MouseOut(CCollider * pSrc, CCollider * pDest, float fDeltaTime) {
+	if (pDest->GetTag() == "Mouse") {
+		m_eState = BS_NONE;
+		SetImageOffset(0.f, 0.f);
+	}
 }

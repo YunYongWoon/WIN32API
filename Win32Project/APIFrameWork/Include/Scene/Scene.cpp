@@ -2,32 +2,33 @@
 #include "Layer.h"
 #include "../Object/Obj.h"
 
-unordered_map<string, CObj*>CScene::m_mapPrototype;
+unordered_map<string, CObj*>CScene::m_mapPrototype[SC_END];
 
 CScene::CScene() {
 	CLayer* pLayer = CreateLayer("UI",INT_MAX);
 	pLayer = CreateLayer("HUD", INT_MAX - 1);
 	pLayer = CreateLayer("Default",1);
 	pLayer = CreateLayer("Stage");
+	m_eSceneType = SC_CURRENT;
 }
 
 CScene::~CScene() {
-	ErasePrototype();
+	ErasePrototype(m_eSceneType);
 	Safe_Delete_VecList(m_LayerList);
 }
 
 
-void CScene::ErasePrototype(const string & strTag) {
-	unordered_map<string, CObj*>::iterator iter = m_mapPrototype.find(strTag);
+void CScene::ErasePrototype(const string & strTag, SCENE_CREATE sc) {
+	unordered_map<string, CObj*>::iterator iter = m_mapPrototype[sc].find(strTag);
 	if (!iter->second) {
 		return;
 	}
 	SAFE_RELEASE(iter->second);
-	m_mapPrototype.erase(iter);
+	m_mapPrototype[sc].erase(iter);
 }
 
-void CScene::ErasePrototype() {
-	Safe_Release_Map(m_mapPrototype);
+void CScene::ErasePrototype(SCENE_CREATE sc) {
+	Safe_Release_Map(m_mapPrototype[sc]);
 }
 
 CLayer * CScene::CreateLayer(const string & strTag, int iZOrder) {
@@ -175,13 +176,20 @@ void CScene::Render(HDC hDC, float fDeltaTime) {
 	}
 }
 
-CObj * CScene::FindPrototype(const string & strKey) {
-	unordered_map<string, CObj*>::iterator iter = m_mapPrototype.find(strKey);
+CObj * CScene::FindPrototype(const string & strKey, SCENE_CREATE sc) {
+	unordered_map<string, CObj*>::iterator iter = m_mapPrototype[sc].find(strKey);
 
-	if (iter == m_mapPrototype.end())
+	if (iter == m_mapPrototype[sc].end())
 		return NULL;
 
 	return iter->second;
+}
+
+void CScene::ChangePrototype() {
+	ErasePrototype(SC_CURRENT);
+	m_mapPrototype[SC_CURRENT] = m_mapPrototype[SC_NEXT];
+	m_mapPrototype[SC_NEXT].clear();
+
 }
 
 bool CScene::LayerSort(CLayer *pL1, CLayer *pL2) {
