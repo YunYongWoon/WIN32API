@@ -12,7 +12,16 @@ public:
 	~CTile();
 
 private:
-	vector<class CTile*> m_vecTile;
+	TILE_OPTION m_eOption;
+
+public:
+	void SetTileOption(TILE_OPTION eOption) {
+		m_eOption = eOption;
+	}
+
+	TILE_OPTION GetTileOption() const {
+		return m_eOption;
+	}
 
 public:
 	virtual bool Init();

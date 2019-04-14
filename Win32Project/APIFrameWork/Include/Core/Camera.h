@@ -58,6 +58,7 @@ public:
 	bool Init(const POSITION& tPos, const RESOLUTION& tRS, const RESOLUTION& tWorldRS);
 	void Input(float fDeltaTime);
 	void Update(float fDeltaTime);
+	void Scroll(float x, float y);
 
 	DECLARE_SINGLE(CCamera)
 };

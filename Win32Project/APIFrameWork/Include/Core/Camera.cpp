@@ -76,3 +76,21 @@ void CCamera::Update(float fDeltaTime) {
 
 	}
 }
+
+void CCamera::Scroll(float x, float y) {
+	m_tPos.x += x;
+	m_tPos.y += y;
+
+	if (m_tPos.x < 0)
+		m_tPos.x = 0;
+
+	else if (m_tPos.x > m_tWorldRS.iW - m_tClientRS.iW)
+		m_tPos.x = m_tWorldRS.iW - m_tClientRS.iW;
+
+	else if (m_tPos.y < 0)
+		m_tPos.y = 0;
+
+	else if (m_tPos.x > m_tWorldRS.iH - m_tClientRS.iH)
+		m_tPos.y = m_tWorldRS.iH - m_tClientRS.iH;
+
+}
