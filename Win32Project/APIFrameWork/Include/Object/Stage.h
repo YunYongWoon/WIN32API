@@ -32,6 +32,8 @@ public:
 	virtual void Collision(float fDeltaTime);
 	virtual void Render(HDC hDC, float fDeltaTime);
 	virtual CStage* Clone();
+	virtual void Save(FILE* pFile);
+	virtual void Load(FILE* pFile);
 
 public:
 	void ChangeTileTexture(const POSITION& tPos,

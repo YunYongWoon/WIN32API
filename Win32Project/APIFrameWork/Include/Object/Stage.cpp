@@ -4,6 +4,7 @@
 #include "../Core/Camera.h"
 #include "Tile.h"
 #include "../Scene/Layer.h"
+#include "../Core/PathManager.h"
 
 CStage::CStage() {
 }
@@ -107,6 +108,45 @@ void CStage::Render(HDC hDC, float fDeltaTime) {
 
 CStage * CStage::Clone() {
 	return new CStage(*this);
+}
+
+void CStage::Save(FILE * pFile) {
+	CStaticObj::Save(pFile);
+
+	// 스테이지 정보 저장
+	fwrite(&m_iTileNumX, 4, 1, pFile);
+	fwrite(&m_iTileNumY, 4, 1, pFile);
+	fwrite(&m_iTileSizeX, 4, 1, pFile);
+	fwrite(&m_iTileSizeX, 4, 1, pFile);
+
+	for (size_t i = 0; i < m_vecTile.size(); i++) {
+		m_vecTile[i]->Save(pFile);
+	}
+}
+
+
+void CStage::Load(FILE * pFile) {
+	CStaticObj::Load(pFile);
+
+	CStaticObj::Save(pFile);
+
+	// 스테이지 정보 저장
+	fread(&m_iTileNumX, 4, 1, pFile);
+	fread(&m_iTileNumY, 4, 1, pFile);
+	fread(&m_iTileSizeX, 4, 1, pFile);
+	fread(&m_iTileSizeX, 4, 1, pFile);
+
+	Safe_Release_VecList(m_vecTile);
+
+	for (int i = 0; i < m_iTileNumX * m_iTileNumY; i++) {
+		CTile* pTile = CObj::CreateObj<CTile>("Tile");
+
+		pTile->Load(pFile);
+
+		m_vecTile.push_back(pTile);
+
+		SAFE_RELEASE(pTile);
+	}
 }
 
 void CStage::ChangeTileTexture(const POSITION & tPos, CTexture * pTexture) {

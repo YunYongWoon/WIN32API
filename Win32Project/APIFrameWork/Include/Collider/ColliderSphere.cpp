@@ -59,3 +59,11 @@ void CColliderSphere::Render(HDC hDC, float fDeltaTime) {
 CColliderSphere * CColliderSphere::Clone() {
 	return new CColliderSphere(*this);
 }
+
+void CColliderSphere::Save(FILE * pFile) {
+	CCollider::Save(pFile);
+}
+
+void CColliderSphere::Load(FILE * pFile) {
+	CCollider::Load(pFile);
+}

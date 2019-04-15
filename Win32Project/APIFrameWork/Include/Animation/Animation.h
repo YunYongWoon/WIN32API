@@ -56,5 +56,9 @@ public:
 	bool Init();
 	void Update(float fTime);
 	CAnimation* Clone();
+	void Save(FILE* pFile);
+	void SaveFromPath(const char* pFileName, const string& strPathKey = DATA_PATH);
+	void Load(FILE* pFile);
+	void LoadFromPath(const char* pFileName, const string& strPathKey = DATA_PATH);
 };
 

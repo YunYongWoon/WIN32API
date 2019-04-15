@@ -147,21 +147,7 @@ void CMapEditScene::Input(float fDeltaTime) {
 		WideCharToMultiByte(CP_ACP, 0, m_strText, -1, strFileName,
 			lstrlen(m_strText), 0, 0);
 
-		const char* pPath = GET_SINGLE(CPathManager)->FindPathMultiByte(DATA_PATH);
-
-		string strFullPath;
-
-		if (pPath)
-			strFullPath = pPath;
-		strFullPath += strFileName;
-
-		FILE* pFile = NULL;
-
-		fopen_s(&pFile, strFullPath.c_str(), "wb");
-
-		if (pFile) {
-			fclose(pFile);
-		}
+		m_pStage->SaveFromPath(strFileName);
 	}
 
 	if (KEYDOWN("Load")) {

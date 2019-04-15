@@ -63,7 +63,6 @@ public:
 	}
 
 protected:
-	string m_strTag;
 	POSITION m_tPos;
 	POSITION m_tPivot;
 	_SIZE m_tSize;
@@ -160,10 +159,6 @@ public:
 		return POSITION(GetLeft() + m_tSize.x / 2.f, GetTop() + m_tSize.y / 2.f);
 	}
 
-	string GetTag() const {
-		return m_strTag;
-	}
-
 	POSITION GetPos() const {
 		return m_tPos;
 	}
@@ -177,10 +172,6 @@ public:
 	}
 
 public:
-	void SetTag(const string& strTag) {
-		m_strTag = strTag;
-	}
-
 	void SetPos(const POSITION& tPos) {
 		m_tPos = tPos;
 	}
@@ -232,6 +223,14 @@ public:
 	virtual void Collision(float fDeltaTime);
 	virtual void Render(HDC hDC, float fDeltaTime);
 	virtual CObj* Clone() = 0;
+	virtual void Save(FILE* pFile);
+	virtual void Load(FILE* pFile);
+
+public:
+	void SaveFromPath(const char* pFileName, const string& strPathKey = DATA_PATH);
+	void SaveFromFullPath(const char* pFullPath);
+	void LoadFromPath(const char* pFileName, const string& strPathKey = DATA_PATH);
+	void LoadFromFullPath(const char* pFullPath);
 
 public:
 	template <typename T>

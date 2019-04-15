@@ -36,6 +36,24 @@ bool CCollider::Collision(CCollider* pDest) {
 void CCollider::Render(HDC hDC, float fDeltaTime) {
 }
 
+void CCollider::Save(FILE * pFile) {
+	// Tag 길이
+	int iLength = m_strTag.length();
+
+	// Tag 길이 저장
+	fwrite(&iLength, 4, 1, pFile);
+
+	// Tag 정보 저장
+	fwrite(m_strTag.c_str(), 1, iLength, pFile);
+
+	// 충돌체 타입 저장
+	fwrite(&m_eCollType, 4, 1, pFile);
+
+}
+
+void CCollider::Load(FILE * pFile) {
+}
+
 bool CCollider::CollisionRectToRect(const RECTANGLE & src, const RECTANGLE & dest) {
 	if (src.l > dest.r)
 		return false;

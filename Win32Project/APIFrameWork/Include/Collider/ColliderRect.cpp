@@ -89,3 +89,11 @@ void CColliderRect::Render(HDC hDC, float fDeltaTime) {
 CColliderRect * CColliderRect::Clone() {
 	return new CColliderRect(*this);
 }
+
+void CColliderRect::Save(FILE * pFile) {
+	CCollider::Save(pFile);
+}
+
+void CColliderRect::Load(FILE * pFile) {
+	CCollider::Load(pFile);
+}

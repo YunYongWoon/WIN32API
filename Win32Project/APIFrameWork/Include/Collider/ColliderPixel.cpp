@@ -21,6 +21,9 @@ CColliderPixel::~CColliderPixel() {
 }
 
 bool CColliderPixel::SetPixelInfo(char * pFileName, const string & strPathKey) {
+	m_strFileName = pFileName;
+	m_strPathKey = strPathKey;
+
 	const char* pPath = GET_SINGLE(CPathManager)->FindPathMultiByte(strPathKey);
 	string strPath;
 
@@ -99,4 +102,30 @@ void CColliderPixel::Render(HDC hDC, float fDeltaTime) {
 
 CColliderPixel * CColliderPixel::Clone() {
 	return new CColliderPixel(*this);
+}
+
+void CColliderPixel::Save(FILE * pFile) {
+	CCollider::Save(pFile);
+
+	// Tag 길이
+	int iLength = m_strFileName.length();
+
+	// Tag 길이 저장
+	fwrite(&iLength, 4, 1, pFile);
+
+	// Tag 정보 저장
+	fwrite(m_strFileName.c_str(), 1, iLength, pFile);
+
+	// Tag 길이
+	iLength = m_strPathKey.length();
+
+	// Tag 길이 저장
+	fwrite(&iLength, 4, 1, pFile);
+
+	// Tag 정보 저장
+	fwrite(m_strPathKey.c_str(), 1, iLength, pFile);
+}
+
+void CColliderPixel::Load(FILE * pFile) {
+	CCollider::Load(pFile);
 }

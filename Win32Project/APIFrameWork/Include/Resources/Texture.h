@@ -17,6 +17,9 @@ private:
 	BITMAP m_tInfo;
 	COLORREF m_ColorKey;
 	bool m_bColorKeyEnable;
+	wstring m_strFileName;
+	string m_strKey;
+	string m_strPathKey;
 
 public:
 	void SetColorKey(unsigned char r, unsigned char g, unsigned char b);
@@ -47,5 +50,10 @@ public:
 	HDC GetDC() const {
 		return m_hMemDC;
 	}
+
+	void SaveFromPath(const char* pFileName, const string& strPathKey = DATA_PATH);
+	void Save(FILE* pFile);
+	void LoadFromPath(const char* pFileName, const string& strPathKey = DATA_PATH);
+	void Load(FILE* pFile);
 };
 

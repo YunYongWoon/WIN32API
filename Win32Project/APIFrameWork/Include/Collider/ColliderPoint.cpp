@@ -61,3 +61,11 @@ void CColliderPoint::Render(HDC hDC, float fDeltaTime) {
 CColliderPoint * CColliderPoint::Clone() {
 	return new CColliderPoint(*this);;
 }
+
+void CColliderPoint::Save(FILE * pFile) {
+	CCollider::Save(pFile);
+}
+
+void CColliderPoint::Load(FILE * pFile) {
+	CCollider::Load(pFile);
+}

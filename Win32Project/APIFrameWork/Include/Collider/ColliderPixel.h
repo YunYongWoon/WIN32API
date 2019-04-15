@@ -16,6 +16,8 @@ protected:
 
 public:
 	vector<PIXEL> m_vecPixel;
+	string m_strFileName;
+	string m_strPathKey;
 	int m_iWidth;
 	int m_iHeight;
 
@@ -43,5 +45,7 @@ public:
 	virtual bool Collision(CCollider* pDest);
 	virtual void Render(HDC hDC, float fDeltaTime);
 	virtual CColliderPixel* Clone();
+	virtual void Save(FILE* pFile);
+	virtual void Load(FILE* pFile);
 };
 
