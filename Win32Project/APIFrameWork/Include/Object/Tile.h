@@ -13,11 +13,10 @@ public:
 
 private:
 	TILE_OPTION m_eOption;
+	class CTexture* m_pOptionTex;
 
 public:
-	void SetTileOption(TILE_OPTION eOption) {
-		m_eOption = eOption;
-	}
+	void SetTileOption(TILE_OPTION eOption);
 
 	TILE_OPTION GetTileOption() const {
 		return m_eOption;

@@ -30,4 +30,7 @@ private:\
 #define KEYDOWN(key)	CInput::GetInst()->KeyDown(key)
 #define KEYPRESS(key)	CInput::GetInst()->KeyPress(key)
 #define KEYUP(key)		CInput::GetInst()->KeyUp(key)
-
+#define MOUSECLIENTPOS  CInput::GetInst()->GetMouseClientPos()
+#define MOUSEWORLDPOS	CInput::GetInst()->GetMouseWorldPos()
+#define MOUSEMOVEPOS	CInput::GetInst()->GetMouseMove()
+#define MOUSE			CInput::GetInst()->GetMouse()

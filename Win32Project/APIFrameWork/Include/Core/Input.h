@@ -32,6 +32,10 @@ public:
 		return m_pMouse;
 	}
 
+	POSITION GetMouseClientPos() const;
+	POSITION GetMouseWorldPos() const;
+	POSITION GetMouseMove() const;
+
 public:
 	template<typename T>
 	bool AddKey(const T& data) {

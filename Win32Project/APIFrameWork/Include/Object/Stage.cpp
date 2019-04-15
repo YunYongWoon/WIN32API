@@ -86,8 +86,60 @@ void CStage::Render(HDC hDC, float fDeltaTime) {
 	for (size_t i = 0; i < m_vecTile.size(); i++) {
 		m_vecTile[i]->Render(hDC, fDeltaTime);
 	}
+
+	// Grid를 그린다.
+	POSITION tCamPos = GET_SINGLE(CCamera)->GetPos();
+
+	for (int i = 1; i < m_iTileNumY; i++) {
+		// 가로줄을 그린다.
+		MoveToEx(hDC, 0.f, i*m_iTileSizeY - tCamPos.y, NULL);
+		LineTo(hDC, m_iTileNumX*m_iTileSizeX, i*m_iTileSizeY - tCamPos.y);
+
+	}
+
+	for (int j = 0; j < m_iTileNumX; j++) {
+		// 세로줄을 그린다.
+		MoveToEx(hDC, j*m_iTileSizeX - tCamPos.x, 0, NULL);
+		LineTo(hDC, j*m_iTileSizeX - tCamPos.x, m_iTileNumY*m_iTileSizeY);
+	}
+
 }
 
 CStage * CStage::Clone() {
 	return new CStage(*this);
+}
+
+void CStage::ChangeTileTexture(const POSITION & tPos, CTexture * pTexture) {
+	int iIndex = GetTileIndex(tPos);
+
+	if (iIndex == -1)
+		return;
+
+	m_vecTile[iIndex]->SetTexture(pTexture);
+}
+
+void CStage::ChangeTileOption(const POSITION & tPos, TILE_OPTION eOption) {
+	int iIndex = GetTileIndex(tPos);
+
+	if (iIndex == -1)
+		return;
+
+	m_vecTile[iIndex]->SetTileOption(eOption);
+}
+
+int CStage::GetTileIndex(const POSITION & tPos) {
+	return GetTileIndex(tPos.x, tPos.y);
+}
+
+int CStage::GetTileIndex(float x, float y) {
+	int idxX = (int)x / m_iTileSizeX;
+	int idxY = (int)y / m_iTileSizeY;
+
+	if (idxX < 0 || idxX >= m_iTileNumX)
+		return -1;
+
+	else if (idxY < 0 || idxY >= m_iTileNumY)
+		return -1;
+
+	return idxY * m_iTileNumX + idxX;
 }

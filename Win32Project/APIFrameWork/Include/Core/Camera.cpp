@@ -90,7 +90,7 @@ void CCamera::Scroll(float x, float y) {
 	else if (m_tPos.y < 0)
 		m_tPos.y = 0;
 
-	else if (m_tPos.x > m_tWorldRS.iH - m_tClientRS.iH)
+	else if (m_tPos.y > m_tWorldRS.iH - m_tClientRS.iH)
 		m_tPos.y = m_tWorldRS.iH - m_tClientRS.iH;
 
 }

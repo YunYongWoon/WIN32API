@@ -57,3 +57,9 @@ enum TILE_OPTION {
 	TO_NONE,
 	TO_NOMOVE
 };
+
+// Edit Mode
+enum TILE_EDIT_MODE {
+	TEM_TEXTURE,
+	TEM_OPTION
+};

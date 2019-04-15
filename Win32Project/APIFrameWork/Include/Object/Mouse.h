@@ -15,6 +15,16 @@ private:
 
 private:
 	POSITION m_tMove;
+	POSITION m_tWorldPos;
+
+public:
+	POSITION GetMove() const {
+		return m_tMove;
+	}
+
+	POSITION GetWorldPos() const {
+		return m_tWorldPos;
+	}
 
 public:
 	virtual bool Init();

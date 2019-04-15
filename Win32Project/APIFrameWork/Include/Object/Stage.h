@@ -32,5 +32,13 @@ public:
 	virtual void Collision(float fDeltaTime);
 	virtual void Render(HDC hDC, float fDeltaTime);
 	virtual CStage* Clone();
+
+public:
+	void ChangeTileTexture(const POSITION& tPos,
+		class CTexture* pTexture);
+	void ChangeTileOption(const POSITION& tPos,
+		TILE_OPTION eOption);
+	int GetTileIndex(const POSITION& tPos);
+	int GetTileIndex(float x, float y);
 };
 

@@ -16,6 +16,18 @@ CInput::~CInput() {
 	Safe_Delete_Map(m_mapKey);
 }
 
+POSITION CInput::GetMouseClientPos() const {
+	return m_pMouse->GetPos();
+}
+
+POSITION CInput::GetMouseWorldPos() const {
+	return m_pMouse->GetWorldPos();
+}
+
+POSITION CInput::GetMouseMove() const {
+	return m_pMouse->GetMove();
+}
+
 bool CInput::Init(HWND hWnd) {
 	m_hWnd = hWnd;
 
@@ -26,6 +38,7 @@ bool CInput::Init(HWND hWnd) {
 	AddKey("Fire", VK_SPACE);
 	AddKey(VK_CONTROL, "Skill1", '1');
 	AddKey(VK_LBUTTON, "MouseLButton");
+	AddKey(VK_RBUTTON, "MouseRButton");
 
 	// 마우스 위치를 얻어오는 함수
 	GetCursorPos(&m_tMousePos);
