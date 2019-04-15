@@ -25,6 +25,7 @@ using namespace std;
 // PATH Key
 #define ROOT_PATH		"RootPath"
 #define TEXTURE_PATH	"TexturePath"
+#define DATA_PATH		"DataPath"
 
 template <typename T>
 void Safe_Delete_VecList(T& p) {

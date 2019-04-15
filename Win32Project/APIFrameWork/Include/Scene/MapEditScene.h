@@ -17,8 +17,15 @@ private:
 	class CStage* m_pStage;
 	int m_iEditTileTex;
 
+private:
+	static wchar_t m_strText[MAX_PATH];
+
 public:
 	virtual bool Init();
 	virtual void Input(float fDeltaTime);
+
+public:
+	static INT_PTR CALLBACK DlgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+
 };
 

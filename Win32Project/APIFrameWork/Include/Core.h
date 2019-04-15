@@ -17,8 +17,12 @@ public:
 		return m_tRS;
 	}
 
-	HWND GetWindowHandle() const{
+	HWND GetWindowHandle() const {
 		return m_hWnd;
+	}
+
+	HINSTANCE GetWindowInstance() const {
+		return m_hInst;
 	}
 	
 	void DestroyGame() {

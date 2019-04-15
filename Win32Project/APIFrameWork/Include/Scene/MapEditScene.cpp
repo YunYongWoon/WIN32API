@@ -10,6 +10,10 @@
 #include "../Core/Input.h"
 #include "../Resources/ResourceManager.h"
 #include "../Resources/Texture.h"
+#include "../resource.h"@
+#include "../Core/PathManager.h"
+
+wchar_t CMapEditScene::m_strText[MAX_PATH] = {};
 
 CMapEditScene::CMapEditScene() {
 	m_eTem = TEM_TEXTURE;
@@ -49,6 +53,9 @@ bool CMapEditScene::Init() {
 
 	m_iEditTileTex = 0;
 	m_eEditOption = TO_NONE;
+
+	GET_SINGLE(CInput)->AddKey("Save", 'S', VK_CONTROL);
+	GET_SINGLE(CInput)->AddKey("Load", 'O', VK_CONTROL);
 
 	return true;
 }
@@ -126,4 +133,57 @@ void CMapEditScene::Input(float fDeltaTime) {
 	if (KEYPRESS("MouseRButton")) {
 
 	}
+
+	if (KEYDOWN("Save")) {
+		ShowCursor(TRUE);
+		DialogBox(WINDOWINSTANCE, MAKEINTRESOURCE(IDD_DIALOG1),
+			WINDOWHANDLE,CMapEditScene::DlgProc);
+
+		ShowCursor(FALSE);
+
+		// 파일명을 이용하여 저장
+		char strFileName[MAX_PATH] = {};
+
+		WideCharToMultiByte(CP_ACP, 0, m_strText, -1, strFileName,
+			lstrlen(m_strText), 0, 0);
+
+		const char* pPath = GET_SINGLE(CPathManager)->FindPathMultiByte(DATA_PATH);
+
+		string strFullPath;
+
+		if (pPath)
+			strFullPath = pPath;
+		strFullPath += strFileName;
+
+		FILE* pFile = NULL;
+
+		fopen_s(&pFile, strFullPath.c_str(), "wb");
+
+		if (pFile) {
+			fclose(pFile);
+		}
+	}
+
+	if (KEYDOWN("Load")) {
+
+	}
+}
+
+INT_PTR CMapEditScene::DlgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
+	switch (message) {
+	case WM_INITDIALOG:
+		return TRUE;
+	case WM_COMMAND:
+		switch (LOWORD(wParam)) {
+		case IDOK:
+			// Edit Box에서 문자열을 얻어온다.
+			memset(m_strText, 0, sizeof(wchar_t)*MAX_PATH);
+			GetDlgItemText(hWnd, IDC_EDIT2, m_strText, MAX_PATH);
+		case IDCANCEL:
+			EndDialog(hWnd, IDOK);
+			return TRUE;
+		}
+		return FALSE;
+	}
+	return FALSE;
 }
